@@ -2,6 +2,22 @@ import { NextResponse } from 'next/server';
 import { XMLParser } from 'fast-xml-parser';
 import openai from '@/lib/openai';
 
+interface NewsItem {
+  title: string;
+  snippet: string;
+  url: string;
+  picture: string;
+  source: string;
+}
+
+interface TrendItem {
+  title: string;
+  traffic: string;
+  picture: string;
+  pictureSource: string;
+  newsItems: NewsItem[];
+}
+
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const location = searchParams.get('location') || 'US';
@@ -18,15 +34,40 @@ export async function GET(request: Request) {
     const xml = await response.text();
     console.log('Successfully fetched XML data');
 
-    const parser = new XMLParser();
+    const parser = new XMLParser({
+      ignoreAttributes: false,
+      attributeNamePrefix: "@_",
+    });
     const result = parser.parse(xml);
     console.log('Successfully parsed XML data');
 
-    const trends = result.rss.channel.item.map((item: any) => item.title);
+    const trends: TrendItem[] = result.rss.channel.item.map((item: any) => ({
+      title: item.title,
+      traffic: item['ht:approx_traffic'],
+      picture: item['ht:picture'],
+      pictureSource: item['ht:picture_source'],
+      newsItems: Array.isArray(item['ht:news_item']) 
+        ? item['ht:news_item'].map((newsItem: any) => ({
+            title: newsItem['ht:news_item_title'],
+            snippet: newsItem['ht:news_item_snippet'],
+            url: newsItem['ht:news_item_url'],
+            picture: newsItem['ht:news_item_picture'],
+            source: newsItem['ht:news_item_source'],
+          }))
+        : [
+            {
+              title: item['ht:news_item']['ht:news_item_title'],
+              snippet: item['ht:news_item']['ht:news_item_snippet'],
+              url: item['ht:news_item']['ht:news_item_url'],
+              picture: item['ht:news_item']['ht:news_item_picture'],
+              source: item['ht:news_item']['ht:news_item_source'],
+            }
+          ]
+    }));
     console.log(`Extracted ${trends.length} trends`);
 
     // Generate AI summary
-    const prompt = `Based on the following trending topics in ${locationName}, provide a brief analysis of what these trends suggest about current interests and concerns in the area: ${trends.join(', ')}`;
+    const prompt = `Based on the following trending topics in ${locationName}, provide a brief analysis of what these trends suggest about current interests and concerns in the area: ${trends.map(t => t.title).join(', ')}`;
 
     console.log('Sending request to OpenAI');
     const aiResponse = await openai.chat.completions.create({
