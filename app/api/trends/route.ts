@@ -1,0 +1,51 @@
+import { NextResponse } from 'next/server';
+import { XMLParser } from 'fast-xml-parser';
+import openai from '@/lib/openai';
+
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const location = searchParams.get('location') || 'US';
+  const locationName = searchParams.get('locationName') || 'United States';
+
+  try {
+    console.log(`Fetching trends for location: ${location}`);
+    const response = await fetch(`https://trends.google.com/trending/rss?geo=${location}`);
+    
+    if (!response.ok) {
+      throw new Error(`Failed to fetch trends: ${response.status} ${response.statusText}`);
+    }
+
+    const xml = await response.text();
+    console.log('Successfully fetched XML data');
+
+    const parser = new XMLParser();
+    const result = parser.parse(xml);
+    console.log('Successfully parsed XML data');
+
+    const trends = result.rss.channel.item.map((item: any) => item.title);
+    console.log(`Extracted ${trends.length} trends`);
+
+    // Generate AI summary
+    const prompt = `Based on the following trending topics in ${locationName}, provide a brief analysis of what these trends suggest about current interests and concerns in the area: ${trends.join(', ')}`;
+
+    console.log('Sending request to OpenAI');
+    const aiResponse = await openai.chat.completions.create({
+      model: "gpt-3.5-turbo",
+      messages: [{ role: "user", content: prompt }],
+      max_tokens: 150,
+      temperature: 0.7,
+    });
+
+    if (!aiResponse.choices || aiResponse.choices.length === 0) {
+      throw new Error('No response from OpenAI');
+    }
+
+    const summary = aiResponse.choices[0].message.content?.trim();
+    console.log('Successfully generated AI summary');
+
+    return NextResponse.json({ trends, summary });
+  } catch (error) {
+    console.error('Error in /api/trends:', error);
+    return NextResponse.json({ error: `Failed to fetch trends or generate summary: ${error.message}` }, { status: 500 });
+  }
+}
