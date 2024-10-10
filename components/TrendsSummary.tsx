@@ -126,9 +126,13 @@ export default function TrendsSummary() {
         </div>
       )}
       {summary && (
-        <div>
+        <div className="mt-4">
           <h3 className="font-semibold mb-2">AI Summary:</h3>
-          <p className="text-sm text-gray-600">{summary}</p>
+          <div className="bg-gray-100 p-4 rounded-md overflow-y-auto max-h-60">
+            <p className="text-sm text-gray-800 whitespace-pre-wrap">
+              {summary}
+            </p>
+          </div>
         </div>
       )}
       {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
