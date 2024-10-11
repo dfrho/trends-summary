@@ -154,114 +154,114 @@ export default function TrendsSummary() {
     fetchTrends();
   }, [fetchTrends]);
 
-  //
   return (
-    <div className="w-full max-w-4xl mx-auto bg-secondary shadow-md rounded-lg p-6">
-      <p className="text-sm text-secondary mb-4">
-        Get AI-generated insights based on trending searches in a state by
-        selecting the state
+    <div className="w-[90%] sm:w-full max-w-4xl mx-auto bg-secondary shadow-md rounded-lg p-4 sm:p-6">
+      {' '}
+      <p className="text-xs sm:text-sm text-secondary mb-4">
+        Get AI-generated insights based on a location's trending searches
       </p>
-
       <USStateMap onStateSelect={handleStateSelect} />
-
       {locationName && (
-        <p className="text-sm text-secondary mb-4">
+        <p className="text-xs sm:text-sm text-secondary mb-4">
           Current location: {locationName}
         </p>
       )}
-
       {isLoading ? (
         <div className="flex items-center justify-center py-10">
-          <Loader2 className="h-8 w-8 animate-spin text-primary" />
-          <p className="ml-2 text-primary">Loading trends...</p>
+          <Loader2 className="h-6 w-6 sm:h-8 sm:w-8 animate-spin text-primary" />
+          <p className="ml-2 text-sm sm:text-base text-primary">
+            Loading trends...
+          </p>
         </div>
       ) : error ? (
-        <p className="text-red-500 text-sm mt-2">{error}</p>
+        <p className="text-red-500 text-xs sm:text-sm mt-2">{error}</p>
       ) : (
         <>
-          {summary ? (
-            <div className="mt-6">
-              <h3 className="text-xl font-semibold mb-2 text-primary">
-                AI Summary
-              </h3>
-              <div className="bg-secondary p-4 rounded-lg">
-                <p className="text-sm text-primary whitespace-pre-wrap">
-                  {summary}
-                </p>
-              </div>
-            </div>
-          ) : (
-            <p className="text-secondary mt-4">
-              No summary available at the moment.
-            </p>
-          )}
           {trends.length > 0 ? (
-            <div className="mt-6">
-              <h3 className="text-xl font-semibold mb-4 text-primary">
-                Trending Topics
-              </h3>
-              <div className="space-y-6">
-                {trends.map((trend, index) => (
-                  <div
-                    key={index}
-                    className="bg-primary border border-secondary p-4 rounded-lg shadow-sm"
-                  >
-                    <div className="flex items-center mb-2">
-                      <h4 className="text-lg font-semibold text-primary">
-                        {trend.title}
-                      </h4>
-                      <span className="ml-2 text-sm text-secondary">
-                        {trend.traffic}
-                      </span>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {trend.newsItems &&
-                        trend.newsItems.map((newsItem, newsIndex) => (
-                          <a
-                            key={newsIndex}
-                            href={newsItem.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-start space-x-3 hover:bg-secondary p-2 rounded transition duration-150 ease-in-out"
-                          >
-                            {newsItem.picture ? (
-                              <img
-                                src={newsItem.picture}
-                                alt={newsItem.title}
-                                className="w-20 h-20 object-cover rounded"
-                                onError={(e) => {
-                                  e.currentTarget.onerror = null;
-                                  e.currentTarget.src =
-                                    '/placeholder.svg?height=80&width=80';
-                                }}
-                              />
-                            ) : (
-                              <div className="w-20 h-20 bg-secondary flex items-center justify-center rounded">
-                                <ImageOff className="w-8 h-8 text-primary" />
-                              </div>
-                            )}
-                            <div>
-                              <h5 className="font-medium text-sm text-primary">
-                                {newsItem.title}
-                              </h5>
-                              {newsItem.snippet && (
-                                <p className="text-xs text-secondary mt-1">
-                                  {newsItem.snippet}
-                                </p>
-                              )}
-                              <p className="text-xs text-secondary mt-1">
-                                {newsItem.source}
-                              </p>
-                            </div>
-                          </a>
-                        ))}
-                    </div>
+            <>
+              {summary ? (
+                <div className="mt-4 sm:mt-6">
+                  <h3 className="text-lg sm:text-xl font-semibold mb-2 text-primary">
+                    The Current Summary
+                  </h3>
+                  <div className="bg-secondary p-3 sm:p-4 rounded-lg">
+                    <p className="text-xs sm:text-sm text-primary whitespace-pre-wrap">
+                      {summary}
+                    </p>
                   </div>
-                ))}
+                </div>
+              ) : (
+                <p className="text-secondary mt-4 text-sm">
+                  No summary available at the moment.
+                </p>
+              )}
+              <div className="mt-4 sm:mt-6">
+                <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-4 text-primary">
+                  Trending Topics
+                </h3>
+                <div className="space-y-4 sm:space-y-6">
+                  {trends.map((trend, index) => (
+                    <div
+                      key={index}
+                      className="bg-primary border border-secondary p-3 sm:p-4 rounded-lg shadow-sm"
+                    >
+                      <div className="flex flex-col sm:flex-row items-start sm:items-center mb-2">
+                        <h4 className="text-base sm:text-lg font-semibold text-primary">
+                          {trend.title}
+                        </h4>
+                        <span className="text-xs sm:text-sm text-secondary mt-1 sm:mt-0 sm:ml-2">
+                          {trend.traffic}
+                        </span>
+                      </div>
+                      <div className="grid grid-cols-1 gap-3 sm:gap-4 px-2 sm:px-4">
+                        {trend.newsItems &&
+                          trend.newsItems.map((newsItem, newsIndex) => (
+                            <a
+                              key={newsIndex}
+                              href={newsItem.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex flex-col sm:flex-row items-start space-y-2 sm:space-y-0 sm:space-x-3 hover:bg-secondary p-2 rounded transition duration-150 ease-in-out"
+                            >
+                              {newsItem.picture ? (
+                                <img
+                                  src={newsItem.picture}
+                                  alt={newsItem.title}
+                                  className="w-full sm:w-16 h-32 sm:h-16 object-cover rounded"
+                                  onError={(e) => {
+                                    e.currentTarget.onerror = null;
+                                    e.currentTarget.src =
+                                      '/placeholder.svg?height=80&width=80';
+                                  }}
+                                />
+                              ) : (
+                                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-secondary flex items-center justify-center rounded">
+                                  <ImageOff className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
+                                </div>
+                              )}
+                              <div className="flex-1 min-w-0">
+                                <h5 className="font-medium text-xs sm:text-sm text-primary">
+                                  {newsItem.title}
+                                </h5>
+                                {newsItem.snippet && (
+                                  <p className="text-xs text-secondary mt-1 line-clamp-2">
+                                    {newsItem.snippet}
+                                  </p>
+                                )}
+                                <p className="text-xs text-secondary mt-1">
+                                  {newsItem.source}
+                                </p>
+                              </div>
+                            </a>
+                          ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
+            </>
           ) : (
-            <p className="text-secondary mt-4">
+            <p className="text-secondary mt-4 text-sm">
               No trending topics available at the moment.
             </p>
           )}
