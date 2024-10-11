@@ -57,7 +57,7 @@ export async function GET(request: Request) {
     const result = parser.parse(xml);
     console.log('Successfully parsed XML data');
 
-    const trends: TrendItem[] = result.rss.channel.item.map((item: any) => {
+    const trends: TrendItem[] = result.rss.channel.item.map((item: TrendItem) => {
       console.log('Processing item:', JSON.stringify(item, null, 2));
       return {
         title: decodeHTMLEntities(item.title),
