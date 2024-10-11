@@ -1,3 +1,5 @@
+
+// @ts-ignore
 import { NextResponse } from 'next/server';
 import { XMLParser } from 'fast-xml-parser';
 import openai from '@/lib/openai';
@@ -57,7 +59,7 @@ export async function GET(request: Request) {
     const result = parser.parse(xml);
     console.log('Successfully parsed XML data');
 
-    const trends: TrendItem[] = result.rss.channel.item.map((item: TrendItem) => {
+    const trends: TrendItem[] = result.rss.channel.item.map((item: any) => {
       console.log('Processing item:', JSON.stringify(item, null, 2));
       return {
         title: decodeHTMLEntities(item.title),
