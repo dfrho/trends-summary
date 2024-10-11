@@ -18,14 +18,14 @@ export const DarkModeToggle = () => {
 
   return (
     <button
-      className="p-2 rounded-md hover:ring-2 hover:ring-gray-300"
+      className="p-2 rounded-md hover:ring-2 hover:ring-gray-300 transition-colors duration-200"
       onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
       aria-label="Toggle dark mode"
     >
       {theme === 'dark' ? (
-        <Sun className="h-5 w-5" />
+        <Sun className="h-4 w-4 sm:h-5 sm:w-5" />
       ) : (
-        <Moon className="h-5 w-5" />
+        <Moon className="h-4 w-4 sm:h-5 sm:w-5" />
       )}
     </button>
   );

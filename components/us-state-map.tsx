@@ -78,7 +78,7 @@ export function USStateMap({ onStateSelect }: USStateMapProps) {
 
   return (
     <div className="w-full max-w-4xl mx-auto">
-      <ComposableMap projection="geoAlbersUsa">
+      <ComposableMap projection="geoAlbersUsa" className="w-full h-auto">
         <Geographies geography={geoUrl}>
           {({ geographies }) =>
             geographies.map((geo) => (

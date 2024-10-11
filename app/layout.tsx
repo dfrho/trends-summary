@@ -21,13 +21,13 @@ export default function RootLayout({
       <body className={inter.className}>
         <ThemeProvider attribute="class">
           <div className="min-h-screen bg-primary text-primary">
-            <nav className="p-4 flex justify-between items-center">
-              <h1 className="text-2xl font-bold">
-                Google Trends by U.S. State
+            <nav className="p-1 flex flex-col sm:flex-row justify-between items-center">
+              <h1 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-0">
+                Search by State Trends
               </h1>
               <DarkModeToggle />
             </nav>
-            {children}
+            <main className="container mx-auto px-4 py-8">{children}</main>
           </div>
         </ThemeProvider>
       </body>
