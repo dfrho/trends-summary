@@ -4,20 +4,19 @@ import { useState, useEffect, useCallback } from 'react';
 import { Loader2, ImageOff } from 'lucide-react';
 import { USStateMap } from './us-state-map';
 
+interface TrendItem {
+  title: string;
+  picture: string;
+  pictureSource: string;
+  newsItems: NewsItem[];
+}
+
 interface NewsItem {
   title: string;
   snippet: string;
   url: string;
   picture: string;
   source: string;
-}
-
-interface TrendItem {
-  title: string;
-  traffic: string;
-  picture: string;
-  pictureSource: string;
-  newsItems: NewsItem[];
 }
 
 const getFullStateName = (stateCode: string): string => {
