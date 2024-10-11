@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Search by State Trends
 
-## Getting Started
+## Overview
 
-First, run the development server:
+Search by State Trends is a hobby project that allows users to explore real-time Google search trends for different states in the United States. This interactive web application provides a unique way to understand what's currently capturing people's attention across various regions of the country.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Interactive US map for easy state selection
+- Real-time Google Trends data for each state
+- AI-generated summaries of trending topics
+- Responsive design for desktop and mobile use
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Use Cases
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. **Remote Team Collaboration**: During virtual meetings, quickly look up what's trending in your colleagues' locations to spark conversation or understand local contexts.
 
-## Learn More
+2. **Empathy Check**: Stay informed about potential local issues, bad news, or severe weather events affecting your contacts or clients in different states.
 
-To learn more about Next.js, take a look at the following resources:
+3. **Content Creation**: Gain insights into region-specific interests for targeted content creation or marketing strategies.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+4. **Cultural Awareness**: Explore trending topics across different states to better understand diverse perspectives and current events across the country.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+5. **Ice Breaker**: Use as an interesting conversation starter in meetings or social gatherings.
 
-## Deploy on Vercel
+## Technology Stack
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Frontend: React with Next.js
+- Backend: Next.js API routes
+- Map Visualization: react-simple-maps
+- Trend Data: Google Trends RSS feed
+- AI Summary: OpenAI GPT-3.5
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Current Architecture
+
+The current architecture of Search by State Trends is designed for simplicity and real-time data processing:
+
+1. **Data Fetching**: The application fetches real-time data from the Google Trends RSS feed for each selected state.
+
+2. **State Selection**: Users interact with an interactive US map to select a state of interest.
+
+3. **Trend Processing**: When a state is selected, the backend processes the RSS feed data to extract relevant trend information.
+
+4. **AI Summary Generation**: The extracted trend data is sent to OpenAI's GPT-3.5 model, which generates a concise summary of the trending topics.
+
+5. **Display**: The frontend displays both the raw trend data and the AI-generated summary to the user.
+
+This architecture allows for quick, on-demand access to current trend data without the need for a persistent database or complex data storage solutions...or competing directly with Google. Because it's just a hobby project...Google 😁.
