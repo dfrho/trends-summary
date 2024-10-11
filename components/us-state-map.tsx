@@ -1,39 +1,42 @@
 'use client';
 
 import React from 'react';
-import { stateCodes } from '@/lib/locationCodes';
+import { ComposableMap, Geographies, Geography } from 'react-simple-maps';
+
+const geoUrl = 'https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json';
 
 interface USStateMapProps {
   onStateSelect: (stateCode: string, stateName: string) => void;
 }
 
 export function USStateMap({ onStateSelect }: USStateMapProps) {
-  const handleStateClick = (stateCode: string, stateName: string) => {
-    onStateSelect(stateCode, stateName);
-  };
-
   return (
-    <div className="w-full max-w-3xl mx-auto p-4">
-      <h2 className="text-2xl font-bold mb-4">Select a State</h2>
-      <svg
-        viewBox="0 0 1000 600"
-        className="w-full h-auto border border-gray-300"
-      >
-        {Object.entries(stateCodes).map(([stateCode, fullCode]) => (
-          <path
-            key={stateCode}
-            d={`M ${Math.random() * 800} ${Math.random() * 400} L ${
-              Math.random() * 800
-            } ${Math.random() * 400} L ${Math.random() * 800} ${
-              Math.random() * 400
-            } Z`}
-            fill="white"
-            stroke="black"
-            onClick={() => handleStateClick(fullCode, stateCode)}
-            className="cursor-pointer hover:fill-gray-200"
-          />
-        ))}
-      </svg>
+    <div className="w-full max-w-4xl mx-auto">
+      <ComposableMap projection="geoAlbersUsa">
+        <Geographies geography={geoUrl}>
+          {({ geographies }) =>
+            geographies.map((geo) => {
+              const stateCode = geo.properties.iso_3166_2 || '';
+              const stateName = geo.properties.name || '';
+              return (
+                <Geography
+                  key={geo.rsmKey}
+                  geography={geo}
+                  onClick={() => {
+                    console.log(`Clicked state: ${stateCode} - ${stateName}`);
+                    onStateSelect(stateCode, stateName);
+                  }}
+                  style={{
+                    default: { fill: '#D6D6DA', outline: 'none' },
+                    hover: { fill: '#F53', outline: 'none' },
+                    pressed: { fill: '#E42', outline: 'none' },
+                  }}
+                />
+              );
+            })
+          }
+        </Geographies>
+      </ComposableMap>
     </div>
   );
 }
