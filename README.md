@@ -51,7 +51,7 @@ This architecture allows for quick, on-demand access to current trend data witho
 
 1. Clone the repository:
    ```
-   git clone https://github.com/yourusername/search-by-state-trends.git
+   git clone https://github.com/dfrho/search-by-state-trends.git
    ```
 
 2. Install dependencies:
