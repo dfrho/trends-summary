@@ -158,11 +158,12 @@ export default function TrendsSummary() {
     <div className="w-[90%] sm:w-full max-w-4xl mx-auto bg-secondary shadow-md rounded-lg p-4 sm:p-6">
       {' '}
       <p className="text-xs sm:text-sm text-secondary mb-4">
-        Get AI-generated insights based on a location's trending searches
+        Get AI-generated insights based on a location's Google Trends, or
+        trending search topics
       </p>
       <USStateMap onStateSelect={handleStateSelect} />
       {locationName && (
-        <p className="text-xs sm:text-sm text-secondary mb-4">
+        <p className="text-xs sm:text-sm text-secondary mb-4 text-center">
           Current location: {locationName}
         </p>
       )}
@@ -261,6 +262,11 @@ export default function TrendsSummary() {
           )}
         </>
       )}
+      <div flex items-center py-10>
+        <p className="text-xs sm:text-sm text-secondary mb-4 text-center">
+          Not for resale or integration; Research use only please.
+        </p>
+      </div>
     </div>
   );
 }
