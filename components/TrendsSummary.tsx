@@ -138,7 +138,11 @@ export default function TrendsSummary() {
       setSummary(data.summary || '');
     } catch (err) {
       console.error('Error fetching trends:', err);
-      setError(`Failed to fetch trends data: ${err.message}`);
+      if (err instanceof Error) {
+        setError(`Failed to fetch trends data: ${err.message}`);
+      } else {
+        setError('Failed to fetch trends data: Unknown error');
+      }
     } finally {
       setIsLoading(false);
     }
