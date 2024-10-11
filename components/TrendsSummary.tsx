@@ -181,9 +181,6 @@ export default function TrendsSummary() {
             <>
               {summary ? (
                 <div className="mt-4 sm:mt-6">
-                  <h3 className="text-lg sm:text-xl font-semibold mb-2 text-primary">
-                    The Current Summary
-                  </h3>
                   <div className="bg-secondary p-3 sm:p-4 rounded-lg">
                     <p className="text-xs sm:text-sm text-primary whitespace-pre-wrap">
                       {summary}
