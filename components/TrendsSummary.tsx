@@ -154,48 +154,63 @@ export default function TrendsSummary() {
     fetchTrends();
   }, [fetchTrends]);
 
+  //
   return (
-    <div className="w-full max-w-4xl mx-auto bg-white shadow-md rounded-lg p-6">
-      <h2 className="text-2xl font-semibold mb-4 text-gray-800">
-        Local Google Trends Summary
-      </h2>
-      <p className="text-sm text-gray-600 mb-4">
-        Get AI-generated insights based on a state's trending searches
+    <div className="w-full max-w-4xl mx-auto bg-secondary shadow-md rounded-lg p-6">
+      <p className="text-sm text-secondary mb-4">
+        Get AI-generated insights based on trending searches in a state by
+        selecting the state
       </p>
 
       <USStateMap onStateSelect={handleStateSelect} />
 
       {locationName && (
-        <p className="text-sm text-gray-600 mb-4">
+        <p className="text-sm text-secondary mb-4">
           Current location: {locationName}
         </p>
       )}
 
       {isLoading ? (
         <div className="flex items-center justify-center py-10">
-          <Loader2 className="h-8 w-8 animate-spin text-blue-500" />
-          <p className="ml-2 text-gray-700">Loading trends...</p>
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+          <p className="ml-2 text-primary">Loading trends...</p>
         </div>
       ) : error ? (
         <p className="text-red-500 text-sm mt-2">{error}</p>
       ) : (
         <>
+          {summary ? (
+            <div className="mt-6">
+              <h3 className="text-xl font-semibold mb-2 text-primary">
+                AI Summary
+              </h3>
+              <div className="bg-secondary p-4 rounded-lg">
+                <p className="text-sm text-primary whitespace-pre-wrap">
+                  {summary}
+                </p>
+              </div>
+            </div>
+          ) : (
+            <p className="text-secondary mt-4">
+              No summary available at the moment.
+            </p>
+          )}
           {trends.length > 0 ? (
             <div className="mt-6">
-              <h3 className="text-xl font-semibold mb-4 text-gray-800">
+              <h3 className="text-xl font-semibold mb-4 text-primary">
                 Trending Topics
               </h3>
               <div className="space-y-6">
                 {trends.map((trend, index) => (
                   <div
                     key={index}
-                    className="bg-white border border-gray-200 p-4 rounded-lg shadow-sm"
+                    className="bg-primary border border-secondary p-4 rounded-lg shadow-sm"
                   >
                     <div className="flex items-center mb-2">
-                      <h4 className="text-lg font-semibold text-gray-800">
+                      <h4 className="text-lg font-semibold text-primary">
                         {trend.title}
                       </h4>
-                      <span className="ml-2 text-sm text-gray-600">
+                      <span className="ml-2 text-sm text-secondary">
                         {trend.traffic}
                       </span>
                     </div>
@@ -207,7 +222,7 @@ export default function TrendsSummary() {
                             href={newsItem.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-start space-x-3 hover:bg-gray-100 p-2 rounded transition duration-150 ease-in-out"
+                            className="flex items-start space-x-3 hover:bg-secondary p-2 rounded transition duration-150 ease-in-out"
                           >
                             {newsItem.picture ? (
                               <img
@@ -221,20 +236,20 @@ export default function TrendsSummary() {
                                 }}
                               />
                             ) : (
-                              <div className="w-20 h-20 bg-gray-200 flex items-center justify-center rounded">
-                                <ImageOff className="w-8 h-8 text-gray-400" />
+                              <div className="w-20 h-20 bg-secondary flex items-center justify-center rounded">
+                                <ImageOff className="w-8 h-8 text-primary" />
                               </div>
                             )}
                             <div>
-                              <h5 className="font-medium text-sm text-gray-800">
+                              <h5 className="font-medium text-sm text-primary">
                                 {newsItem.title}
                               </h5>
                               {newsItem.snippet && (
-                                <p className="text-xs text-gray-600 mt-1">
+                                <p className="text-xs text-secondary mt-1">
                                   {newsItem.snippet}
                                 </p>
                               )}
-                              <p className="text-xs text-gray-500 mt-1">
+                              <p className="text-xs text-secondary mt-1">
                                 {newsItem.source}
                               </p>
                             </div>
@@ -246,24 +261,8 @@ export default function TrendsSummary() {
               </div>
             </div>
           ) : (
-            <p className="text-gray-600 mt-4">
+            <p className="text-secondary mt-4">
               No trending topics available at the moment.
-            </p>
-          )}
-          {summary ? (
-            <div className="mt-6">
-              <h3 className="text-xl font-semibold mb-2 text-gray-800">
-                AI Summary
-              </h3>
-              <div className="bg-gray-100 p-4 rounded-lg">
-                <p className="text-sm text-gray-800 whitespace-pre-wrap">
-                  {summary}
-                </p>
-              </div>
-            </div>
-          ) : (
-            <p className="text-gray-600 mt-4">
-              No summary available at the moment.
             </p>
           )}
         </>

@@ -1,12 +1,14 @@
 import './globals.css';
-import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import { ThemeProvider } from 'next-themes';
+import { DarkModeToggle } from '../components/DarkModeToggle';
 
 const inter = Inter({ subsets: ['latin'] });
 
-export const metadata: Metadata = {
-  title: 'Local Google Trends Summary',
-  description: "Get AI-generated insights based on a state's trending searches",
+export const metadata = {
+  title: 'Search by State Trends',
+  description:
+    'Explore real-time Google search trends for different states in the US',
 };
 
 export default function RootLayout({
@@ -15,8 +17,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <body className={inter.className}>
+        <ThemeProvider attribute="class">
+          <div className="min-h-screen bg-primary text-primary">
+            <nav className="p-4 flex justify-between items-center">
+              <h1 className="text-2xl font-bold">
+                Google Trends by U.S. State
+              </h1>
+              <DarkModeToggle />
+            </nav>
+            {children}
+          </div>
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
