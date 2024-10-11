@@ -206,9 +206,6 @@ export default function TrendsSummary() {
                         <h4 className="text-base sm:text-lg font-semibold text-primary">
                           {trend.title}
                         </h4>
-                        <span className="text-xs sm:text-sm text-secondary mt-1 sm:mt-0 sm:ml-2">
-                          {trend.traffic}
-                        </span>
                       </div>
                       <div className="grid grid-cols-1 gap-3 sm:gap-4 px-2 sm:px-4">
                         {trend.newsItems &&
