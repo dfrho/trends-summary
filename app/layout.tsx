@@ -47,11 +47,13 @@ export default function RootLayout({
       <body className={inter.className}>
         <ThemeProvider attribute="class">
           <div className="min-h-screen bg-primary text-primary">
-            <nav className="p-1 flex flex-col sm:flex-row justify-between items-center">
-              <div className="w-full sm:w-auto flex justify-center sm:justify-start mb-2 sm:mb-0">
-                <h1 className="text-xl sm:text-2xl font-bold">
-                  Search by State Trends
-                </h1>
+            <nav className="p-4">
+              <div className="max-w-4xl mx-auto flex flex-col sm:flex-row justify-between items-center">
+                <div className="w-full sm:w-auto flex justify-center mb-2 sm:mb-0">
+                  <h1 className="text-xl sm:text-2xl font-bold">
+                    Search by State Trends
+                  </h1>
+                </div>
                 <DarkModeToggle />
               </div>
             </nav>
