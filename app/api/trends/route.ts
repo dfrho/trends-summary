@@ -1,3 +1,5 @@
+
+// @ts-ignore
 import { NextResponse } from 'next/server';
 import { XMLParser } from 'fast-xml-parser';
 import openai from '@/lib/openai';
@@ -61,7 +63,7 @@ export async function GET(request: Request) {
       console.log('Processing item:', JSON.stringify(item, null, 2));
       return {
         title: decodeHTMLEntities(item.title),
-        traffic: item['ht:approx_traffic'] || 'Unknown',
+        traffic: item['ht:traffic'] || 'Unknown',
         picture: item['ht:picture'] || '',
         pictureSource: item['ht:picture_source'] || '',
         newsItems: Array.isArray(item['ht:news_item']) 
@@ -88,14 +90,14 @@ export async function GET(request: Request) {
     console.log(`Extracted ${trends.length} trends`);
     console.log('First trend:', JSON.stringify(trends[0], null, 2));
 
-    const prompt = `Based on the following trending topics in ${locationName}, provide a brief analysis of what these trends suggest about current interests and concerns in the area: ${trends.map(t => t.title).join(', ')}`;
+    const prompt = `Based on the following trending topics in ${locationName}, provide a brief analysis of what these trends suggest about current interests and concerns in the area. Use maximum burstiness and perplexity: ${trends.map(t => t.title).join(', ')}`;
 
     console.log('Sending request to OpenAI');
     const aiResponse = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
       messages: [{ role: "user", content: prompt }],
-      max_tokens: 150,
-      temperature: 0.7,
+      max_tokens: 350,
+      temperature: 0.8,
     });
 
     if (!aiResponse.choices || aiResponse.choices.length === 0) {
@@ -108,6 +110,5 @@ export async function GET(request: Request) {
     return NextResponse.json({ trends, summary });
   } catch (error) {
     console.error('Error in /api/trends:', error);
-    return NextResponse.json({ error: `Failed to fetch trends or generate summary: ${error.message}` }, { status: 500 });
-  }
+    return NextResponse.json({ error: `Failed to fetch trends or generate summary: ${(error as Error).message}` }, { status: 500 }); }
 }
