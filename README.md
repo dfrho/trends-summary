@@ -2,7 +2,7 @@
 
 ## Introduction
 
-In our recent project, Search by State Trends, we explored the potential of AI as a pair programming partner to accelerate the development of our Minimum Viable Product (MVP). This blog post outlines our experience using Vercel v0, an AI coding assistant, and the key areas where its assistance proved particularly valuable in reducing development time.
+Search by State Trends was an easy way to test AI as a pair programming partner to accelerate the development of a Minimum Viable Product (MVP). This outlines our experience using Vercel v0, an AI coding assistant, and the key areas where its assistance proved particularly valuable in reducing development time.
 
 ## Project Overview
 
