@@ -13,14 +13,14 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://search-state-trends-summary.vercel.app',
+    url: 'https://state-search-trends-summary.vercel.app',
     siteName: 'Search by State Trends',
     title: 'Search by State Trends',
     description:
       'Explore real-time Google search trends for different states in the US',
     images: [
       {
-        url: 'https://search-by-state-trends.vercel.app/og-image.png',
+        url: 'https://state-search-trends-summary.vercel.app/og-image.png',
         width: 1200,
         height: 630,
         alt: 'Search by State Trends',
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     description:
       'Explore real-time Google search trends for different states in the US',
     images: ['https://state-search-trends-summary.vercel.app/og-image.png'],
-    creator: '@yourtwitterhandle',
+    creator: '@bubbasdad',
   },
 };
 
