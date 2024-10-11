@@ -61,7 +61,7 @@ export async function GET(request: Request) {
       console.log('Processing item:', JSON.stringify(item, null, 2));
       return {
         title: decodeHTMLEntities(item.title),
-        traffic: item['ht:traffic'] || 'Unknown',
+        traffic: item['ht:approx_traffic'] || 'Unknown',
         picture: item['ht:picture'] || '',
         pictureSource: item['ht:picture_source'] || '',
         newsItems: Array.isArray(item['ht:news_item']) 
