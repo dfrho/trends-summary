@@ -90,14 +90,14 @@ export async function GET(request: Request) {
     console.log(`Extracted ${trends.length} trends`);
     console.log('First trend:', JSON.stringify(trends[0], null, 2));
 
-    const prompt = `Based on the following trending topics in ${locationName}, provide a brief analysis of what these trends suggest about current interests and concerns in the area: ${trends.map(t => t.title).join(', ')}`;
+    const prompt = `Based on the following trending topics in ${locationName}, provide a brief analysis of what these trends suggest about current interests and concerns in the area. Use maximum burstiness and perplexity: ${trends.map(t => t.title).join(', ')}`;
 
     console.log('Sending request to OpenAI');
     const aiResponse = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
       messages: [{ role: "user", content: prompt }],
-      max_tokens: 150,
-      temperature: 0.7,
+      max_tokens: 350,
+      temperature: 0.8,
     });
 
     if (!aiResponse.choices || aiResponse.choices.length === 0) {

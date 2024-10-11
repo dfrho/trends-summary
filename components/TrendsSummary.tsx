@@ -160,7 +160,7 @@ export default function TrendsSummary() {
         Local Google Trends Summary
       </h2>
       <p className="text-sm text-gray-600 mb-4">
-        Get AI-generated insights based on your location's trending searches
+        Get AI-generated insights based on a state's trending searches
       </p>
 
       <USStateMap onStateSelect={handleStateSelect} />
