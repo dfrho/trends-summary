@@ -87,9 +87,24 @@ export function USStateMap({ onStateSelect }: USStateMapProps) {
                 geography={geo}
                 onClick={() => handleStateClick(geo)}
                 style={{
-                  default: { fill: '#D6D6DA', outline: 'none' },
-                  hover: { fill: '#F53', outline: 'none' },
-                  pressed: { fill: '#E42', outline: 'none' },
+                  default: {
+                    fill: 'var(--color-map-fill)',
+                    stroke: 'var(--color-map-stroke)',
+                    strokeWidth: 0.5,
+                    outline: 'none',
+                  },
+                  hover: {
+                    fill: 'var(--color-map-hover)',
+                    stroke: 'var(--color-map-stroke)',
+                    strokeWidth: 0.5,
+                    outline: 'none',
+                  },
+                  pressed: {
+                    fill: 'var(--color-map-pressed)',
+                    stroke: 'var(--color-map-stroke)',
+                    strokeWidth: 0.5,
+                    outline: 'none',
+                  },
                 }}
               />
             ))
