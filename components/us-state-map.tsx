@@ -1,39 +1,101 @@
 'use client';
 
 import React from 'react';
-import { stateCodes } from '@/lib/locationCodes';
+import { ComposableMap, Geographies, Geography } from 'react-simple-maps';
+
+const geoUrl = 'https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json';
 
 interface USStateMapProps {
   onStateSelect: (stateCode: string, stateName: string) => void;
 }
 
+const stateNameToCode: { [key: string]: string } = {
+  Alabama: 'AL',
+  Alaska: 'AK',
+  Arizona: 'AZ',
+  Arkansas: 'AR',
+  California: 'CA',
+  Colorado: 'CO',
+  Connecticut: 'CT',
+  Delaware: 'DE',
+  Florida: 'FL',
+  Georgia: 'GA',
+  Hawaii: 'HI',
+  Idaho: 'ID',
+  Illinois: 'IL',
+  Indiana: 'IN',
+  Iowa: 'IA',
+  Kansas: 'KS',
+  Kentucky: 'KY',
+  Louisiana: 'LA',
+  Maine: 'ME',
+  Maryland: 'MD',
+  Massachusetts: 'MA',
+  Michigan: 'MI',
+  Minnesota: 'MN',
+  Mississippi: 'MS',
+  Missouri: 'MO',
+  Montana: 'MT',
+  Nebraska: 'NE',
+  Nevada: 'NV',
+  'New Hampshire': 'NH',
+  'New Jersey': 'NJ',
+  'New Mexico': 'NM',
+  'New York': 'NY',
+  'North Carolina': 'NC',
+  'North Dakota': 'ND',
+  Ohio: 'OH',
+  Oklahoma: 'OK',
+  Oregon: 'OR',
+  Pennsylvania: 'PA',
+  'Rhode Island': 'RI',
+  'South Carolina': 'SC',
+  'South Dakota': 'SD',
+  Tennessee: 'TN',
+  Texas: 'TX',
+  Utah: 'UT',
+  Vermont: 'VT',
+  Virginia: 'VA',
+  Washington: 'WA',
+  'West Virginia': 'WV',
+  Wisconsin: 'WI',
+  Wyoming: 'WY',
+};
+
 export function USStateMap({ onStateSelect }: USStateMapProps) {
-  const handleStateClick = (stateCode: string, stateName: string) => {
-    onStateSelect(stateCode, stateName);
+  const handleStateClick = (geo: any) => {
+    const stateName = geo.properties?.name || '';
+    const stateCode = stateNameToCode[stateName] || '';
+
+    console.log(`Clicked state: ${stateCode} - ${stateName}`);
+
+    if (stateCode && stateName) {
+      onStateSelect(`US-${stateCode}`, stateName);
+    } else {
+      console.error('State code or name is undefined', geo.properties);
+    }
   };
 
   return (
-    <div className="w-full max-w-3xl mx-auto p-4">
-      <h2 className="text-2xl font-bold mb-4">Select a State</h2>
-      <svg
-        viewBox="0 0 1000 600"
-        className="w-full h-auto border border-gray-300"
-      >
-        {Object.entries(stateCodes).map(([stateCode, fullCode]) => (
-          <path
-            key={stateCode}
-            d={`M ${Math.random() * 800} ${Math.random() * 400} L ${
-              Math.random() * 800
-            } ${Math.random() * 400} L ${Math.random() * 800} ${
-              Math.random() * 400
-            } Z`}
-            fill="white"
-            stroke="black"
-            onClick={() => handleStateClick(fullCode, stateCode)}
-            className="cursor-pointer hover:fill-gray-200"
-          />
-        ))}
-      </svg>
+    <div className="w-full max-w-4xl mx-auto">
+      <ComposableMap projection="geoAlbersUsa">
+        <Geographies geography={geoUrl}>
+          {({ geographies }) =>
+            geographies.map((geo) => (
+              <Geography
+                key={geo.rsmKey}
+                geography={geo}
+                onClick={() => handleStateClick(geo)}
+                style={{
+                  default: { fill: '#D6D6DA', outline: 'none' },
+                  hover: { fill: '#F53', outline: 'none' },
+                  pressed: { fill: '#E42', outline: 'none' },
+                }}
+              />
+            ))
+          }
+        </Geographies>
+      </ComposableMap>
     </div>
   );
 }
