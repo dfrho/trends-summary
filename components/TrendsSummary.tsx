@@ -9,6 +9,7 @@ interface TrendItem {
   picture: string;
   pictureSource: string;
   newsItems: NewsItem[];
+  traffic: string;
 }
 
 interface NewsItem {
