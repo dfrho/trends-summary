@@ -110,6 +110,5 @@ export async function GET(request: Request) {
     return NextResponse.json({ trends, summary });
   } catch (error) {
     console.error('Error in /api/trends:', error);
-    return NextResponse.json({ error: `Failed to fetch trends or generate summary: ${error.message}` }, { status: 500 });
-  }
+    return NextResponse.json({ error: `Failed to fetch trends or generate summary: ${(error as Error).message}` }, { status: 500 }); }
 }
