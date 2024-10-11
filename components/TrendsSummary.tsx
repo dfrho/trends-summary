@@ -262,7 +262,7 @@ export default function TrendsSummary() {
           )}
         </>
       )}
-      <div flex py-10>
+      <div className="flex items-center py-10">
         <p className="text-xs sm:text-sm text-secondary mb-4 text-center">
           Not for resale or integration; Research use only please.
         </p>
