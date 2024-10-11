@@ -48,7 +48,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class">
           <div className="min-h-screen bg-primary text-primary">
             <nav className="p-1 flex flex-col sm:flex-row justify-between items-center">
-              <h1 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-0">
+            <div className="w-full sm:w-auto flex justify-center sm:justify-start mb-2 sm:mb-0">
                 Search by State Trends
               </h1>
               <DarkModeToggle />
