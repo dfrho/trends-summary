@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     title: 'Search by State Trends',
     description:
       'Explore real-time Google search trends for different states in the US',
-    images: ['https://search-by-state-trends.vercel.app/og-image.png'],
+    images: ['https://state-search-trends-summary.vercel.app/og-image.png'],
     creator: '@yourtwitterhandle',
   },
 };
