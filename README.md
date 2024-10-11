@@ -45,4 +45,54 @@ The current architecture of Search by State Trends is designed for simplicity an
 
 5. **Display**: The frontend displays both the raw trend data and the AI-generated summary to the user.
 
-This architecture allows for quick, on-demand access to current trend data without the need for a persistent database or complex data storage solutions...or competing directly with Google. Because it's just a hobby project...Google 😁.
+This architecture allows for quick, on-demand access to current trend data without the need for a persistent database or complex data storage solutions.
+
+## Getting Started
+
+1. Clone the repository:
+   ```
+   git clone https://github.com/yourusername/search-by-state-trends.git
+   ```
+
+2. Install dependencies:
+   ```
+   cd search-by-state-trends
+   npm install
+   ```
+
+3. Set up environment variables:
+   - Copy the `.env.example` file to `.env.local`:
+     ```
+     cp .env.example .env.local
+     ```
+   - Open `.env.local` and replace `your_openai_api_key_here` with your actual OpenAI API key:
+     ```
+     OPENAI_API_KEY=sk-your-actual-api-key
+     ```
+   
+   Note: Make sure to keep your API key confidential and never commit it to version control.
+
+4. Run the development server:
+   ```
+   npm run dev
+   ```
+
+5. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+
+## Acknowledgments
+
+- Google Trends for providing the trending data
+- OpenAI for the GPT-3.5 model used in generating summaries
+- React Simple Maps for the interactive US map visualization
+
+## Disclaimer
+
+This project is not affiliated with, endorsed, or sponsored by Google. It uses publicly available data from Google Trends.
