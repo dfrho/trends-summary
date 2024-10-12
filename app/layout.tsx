@@ -44,22 +44,19 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const posthogKey = process.env.POSTHOG_API_KEY || '';
+  const posthogKey = process.env.POSTHOG_KEY || '';
+
   return (
     <html lang="en" suppressHydrationWarning>
       <PostHogProvider posthogKey={posthogKey}>
         <body className={inter.className}>
-          <ThemeProvider attribute="class">
-            <div className="min-h-screen bg-primary text-primary">
-              <nav className="p-4">
-                <div className="max-w-4xl mx-auto flex flex-col sm:flex-row justify-between items-center">
-                  <div className="w-full sm:w-auto flex justify-center mb-2 sm:mb-0">
-                    <h1 className="text-xl sm:text-2xl font-bold">
-                      Search by State Trends
-                    </h1>
-                  </div>
-                  <DarkModeToggle />
-                </div>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <div className="min-h-screen bg-background text-foreground">
+              <nav className="p-4 flex justify-between items-center">
+                <h1 className="text-xl sm:text-2xl font-bold">
+                  Search by State Trends
+                </h1>
+                <DarkModeToggle />
               </nav>
               <main className="container mx-auto px-4 py-8">{children}</main>
               <CookieBanner />
