@@ -4,6 +4,7 @@ import { ThemeProvider } from 'next-themes';
 import { DarkModeToggle } from '../components/DarkModeToggle';
 import { Metadata } from 'next';
 import { PostHogProvider } from '../components/PostHogProvider';
+import { CookieBanner } from '../components/CookieBanner';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -61,6 +62,7 @@ export default function RootLayout({
                 </div>
               </nav>
               <main className="container mx-auto px-4 py-8">{children}</main>
+              <CookieBanner />
             </div>
           </ThemeProvider>
         </body>
