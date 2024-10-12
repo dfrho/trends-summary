@@ -40,7 +40,7 @@ Working with Vercel v0, we were able to complete the MVP in approximately 48 hou
 
 The current architecture of Search by State Trends is designed for simplicity and real-time data processing:
 
-1. **Data Fetching**: The application fetches real-time data from the Google Trends RSS feed for each selected state.
+1. **Data Fetching**: The application fetches real-time data from the Google Trends shared RSS feed for each selected state.
 
 2. **State Selection**: Users interact with an interactive US map to select a state of interest.
 
@@ -171,10 +171,10 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-- Google Trends for providing the trending data
+- Google Trends shared RSS feed for the trending data
 - OpenAI for the GPT-3.5 model used in generating summaries
 - React Simple Maps for the interactive US map visualization
 
 ## Disclaimer
 
-This project is not affiliated with, endorsed, or sponsored by Google. It uses publicly available data from Google Trends.
+This project is not affiliated with, endorsed, or sponsored by Google. It uses publicly available data from Google Trends client-shared RSS feed.
