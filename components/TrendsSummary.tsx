@@ -167,8 +167,8 @@ export default function TrendsSummary() {
           className="underline hover:text-slate-900 dark:hover:text-slate-100"
         >
           Google Trends
-        </Link>
-        , or trending search topics
+        </Link>{' '}
+        shared RSS feed
       </p>
       <USStateMap onStateSelect={handleStateSelect} />
       {locationName && (
