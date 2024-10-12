@@ -158,8 +158,8 @@ export default function TrendsSummary() {
     <div className="w-[90%] sm:w-full max-w-4xl mx-auto bg-secondary shadow-md rounded-lg p-4 sm:p-6">
       {' '}
       <p className="text-xs sm:text-sm text-secondary mb-4">
-        Get AI-generated insights based on a location's Google Trends Shared RSS
-        feed, or trending search topics
+        AI-generated insights based on a location's Google Trends shared RSS
+        feed
       </p>
       <USStateMap onStateSelect={handleStateSelect} />
       {locationName && (
