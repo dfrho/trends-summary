@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Button } from '@/components/ut/Button';
+import { Button } from '@/components/ui/Button';
 
 export function CookieBanner() {
   const [showBanner, setShowBanner] = useState(false);
