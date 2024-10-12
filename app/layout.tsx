@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google';
 import { ThemeProvider } from 'next-themes';
 import { DarkModeToggle } from '../components/DarkModeToggle';
 import { Metadata } from 'next';
+import { PostHogProvider } from '../components/PostHogProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -42,25 +43,28 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const posthogKey = process.env.POSTHOG_API_KEY || '';
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
-        <ThemeProvider attribute="class">
-          <div className="min-h-screen bg-primary text-primary">
-            <nav className="p-4">
-              <div className="max-w-4xl mx-auto flex flex-col sm:flex-row justify-between items-center">
-                <div className="w-full sm:w-auto flex justify-center mb-2 sm:mb-0">
-                  <h1 className="text-xl sm:text-2xl font-bold">
-                    Search by State Trends
-                  </h1>
+      <PostHogProvider posthogKey={posthogKey}>
+        <body className={inter.className}>
+          <ThemeProvider attribute="class">
+            <div className="min-h-screen bg-primary text-primary">
+              <nav className="p-4">
+                <div className="max-w-4xl mx-auto flex flex-col sm:flex-row justify-between items-center">
+                  <div className="w-full sm:w-auto flex justify-center mb-2 sm:mb-0">
+                    <h1 className="text-xl sm:text-2xl font-bold">
+                      Search by State Trends
+                    </h1>
+                  </div>
+                  <DarkModeToggle />
                 </div>
-                <DarkModeToggle />
-              </div>
-            </nav>
-            <main className="container mx-auto px-4 py-8">{children}</main>
-          </div>
-        </ThemeProvider>
-      </body>
+              </nav>
+              <main className="container mx-auto px-4 py-8">{children}</main>
+            </div>
+          </ThemeProvider>
+        </body>
+      </PostHogProvider>
     </html>
   );
 }
