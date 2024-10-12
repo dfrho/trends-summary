@@ -23,7 +23,7 @@ export function CookieBanner() {
   }
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-background border-t border-border p-4 shadow-lg">
+    <div className="fixed bottom-0 left-0 right-0 bg-purple-500/20 dark:bg-purple-700/20 border-t border-border p-4 shadow-lg backdrop-blur-sm">
       <div className="container mx-auto flex flex-col sm:flex-row items-center justify-between">
         <p className="text-sm text-foreground mb-4 sm:mb-0">
           We use cookies to track meta information about your visit. No
