@@ -1,6 +1,7 @@
 import './globals.css';
 import { Inter } from 'next/font/google';
 import { ThemeProvider } from 'next-themes';
+import Link from 'next/link';
 import { DarkModeToggle } from '../components/DarkModeToggle';
 import { Metadata } from 'next';
 import { PostHogProvider } from '../components/PostHogProvider';
@@ -59,6 +60,17 @@ export default function RootLayout({
                 <DarkModeToggle />
               </nav>
               <main className="container mx-auto px-4 py-8">{children}</main>
+              <footer className="text-center py-4 text-sm text-slate-600 dark:text-slate-400">
+                Powered by{' '}
+                <Link
+                  href="https://trends.google.com/trends/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline hover:text-slate-900 dark:hover:text-slate-100"
+                >
+                  Google Trends
+                </Link>
+              </footer>
               <CookieBanner />
             </div>
           </ThemeProvider>
