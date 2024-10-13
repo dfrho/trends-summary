@@ -10,14 +10,14 @@ import { CookieBanner } from '../components/CookieBanner';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Search by State Trends',
+  title: 'Search Trend by State',
   description: 'Explore real-time search trends for different states in the US',
   openGraph: {
     type: 'website',
     locale: 'en_US',
     url: 'https://state-search-trends-summary.vercel.app',
-    siteName: 'Search by State Trends',
-    title: 'Search by State Trends',
+    siteName: 'Search Trends by State ',
+    title: 'Search Trends by State',
     description:
       'Explore real-time search trends for different states in the US',
     images: [
@@ -25,17 +25,16 @@ export const metadata: Metadata = {
         url: 'https://state-search-trends-summary.vercel.app/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'Search by State Trends',
+        alt: 'Search Trends by State',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Search by State Trends',
-    description:
-      'Explore real-time search trends for different states in the US',
+    title: 'Search Trends by State',
+    description: 'Explore real-time search trends by state in the US',
     images: ['https://state-search-trends-summary.vercel.app/og-image.png'],
-    creator: '@bubbasdad',
+    creator: '@brhodesdav',
   },
 };
 
