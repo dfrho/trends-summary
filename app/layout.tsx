@@ -10,8 +10,7 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Search by State Trends',
-  description:
-    'Explore real-time Google search trends for different states in the US',
+  description: 'Explore real-time search trends for different states in the US',
   openGraph: {
     type: 'website',
     locale: 'en_US',
@@ -19,7 +18,7 @@ export const metadata: Metadata = {
     siteName: 'Search by State Trends',
     title: 'Search by State Trends',
     description:
-      'Explore real-time Google search trends for different states in the US',
+      'Explore real-time search trends for different states in the US',
     images: [
       {
         url: 'https://state-search-trends-summary.vercel.app/og-image.png',
@@ -33,7 +32,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Search by State Trends',
     description:
-      'Explore real-time Google search trends for different states in the US',
+      'Explore real-time search trends for different states in the US',
     images: ['https://state-search-trends-summary.vercel.app/og-image.png'],
     creator: '@bubbasdad',
   },
