@@ -274,9 +274,7 @@ export default function TrendsSummary() {
       <div className="flex items-center py-10">
         <p className="text-xs sm:text-sm text-secondary mb-4 text-center">
           Not for resale or integration; Research use only please. This project
-          is not affiliated with, endorsed, or sponsored by Google. It uses
-          publicly available data from Google Trends RSS feed ("share to"
-          button).
+          is not affiliated with or endorsed by Google.
         </p>
       </div>
     </div>
