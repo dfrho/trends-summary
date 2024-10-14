@@ -56,7 +56,7 @@ This architecture allows for quick, on-demand access to current trend data witho
 
 ### 1. Project Planning and Architecture
 
-While the initial concept was human-driven, Vercel v0 helped refine our project structure and architecture. By describing our goals, we received suggestions for:
+While the initial concept was human-driven, Vercel v0 helped refine our project structure and architecture. By describing our goals, we received validations for:
 
 - Implementing a React + Next.js frontend for performance and SEO benefits
 - Utilizing Next.js API routes for backend functionality
@@ -66,7 +66,7 @@ This guidance saved us several hours of research and decision-making time.
 
 ### 2. API Design and Integration
 
-Vercel v0 assisted in designing a clean and efficient API for our application. For example, it helped formulate the endpoint structure. And I'm recalling here how one of the biggest challenges in generating clean code is clarity in naming things. v0 also provided guidance on error handling and response formatting, ensuring our API was robust and user-friendly. This assistance cut down API development time by approximately 50%.
+Vercel v0 assisted in designing a clean and efficient API for our application. For example, it helped formulate the endpoint structure. And I'm recalling here that it's been written that one of the biggest challenges in generating clean code is naming things. v0 also provided guidance on error handling and response formatting, ensuring our API was robust and user-friendly. This assistance cut down API development time by approximately 50%.
 
 ### 3. OpenAI API Integration and Prompt Engineering
 
