@@ -6,7 +6,6 @@ import { DarkModeToggle } from '../components/DarkModeToggle';
 import { Metadata } from 'next';
 import { PostHogProvider } from '../components/PostHogProvider';
 import { CookieBanner } from '../components/CookieBanner';
-import Link from 'next/link';
 import { Github } from 'lucide-react';
 
 const inter = Inter({ subsets: ['latin'] });
