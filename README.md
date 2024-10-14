@@ -6,7 +6,7 @@ Search by State Trends was an easy way to test AI as a pair programming partner 
 
 ## Project Overview
 
-Search by State Trends is a web application that visualizes and summarizes Google search trends by state in the United States. (This is a test read of the Google Trends "Share" to "XML" feeds by state. Only a hobby learning project, using standard browser methods). 
+Search by State Trends is a web application that visualizes and summarizes Google search trends by state in the United States. (We parse the Google Trends "Share" to "XML" feeds when searched by state. Only a hobby learning project, using standard browser methods).
 
 Our goal was to create a functional MVP that could:
 
