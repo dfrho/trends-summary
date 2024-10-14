@@ -6,6 +6,7 @@ import { DarkModeToggle } from '../components/DarkModeToggle';
 import { Metadata } from 'next';
 import { PostHogProvider } from '../components/PostHogProvider';
 import { CookieBanner } from '../components/CookieBanner';
+import { Github } from 'lucide-react';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -52,9 +53,20 @@ export default function RootLayout({
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <div className="min-h-screen bg-background text-foreground">
               <nav className="p-4 flex justify-between items-center">
-                <h1 className="text-xl sm:text-2xl font-bold">
-                  Search by State Trends
-                </h1>
+                <div className="flex items-center space-x-4">
+                  <h1 className="text-xl sm:text-2xl font-bold">
+                    Search by State Trends
+                  </h1>
+                  <Link
+                    href="https://github.com/dfrho/trends-summary"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100"
+                  >
+                    <Github className="w-6 h-6" />
+                    <span className="sr-only">GitHub repository</span>
+                  </Link>
+                </div>
                 <DarkModeToggle />
               </nav>
               <main className="container mx-auto px-4 py-8">{children}</main>
