@@ -81,7 +81,7 @@ Here's an example of a prompt we developed with v0's assistance:
 ```javascript
 const prompt = `Summarize the following trending topics in ${locationName}: ${trendsSummary}. Provide insights into why these topics might be trending and their potential significance.`;
 ```
-v0's expertise in prompt engineering saved us countless hours of trial and error, allowing us to achieve high-quality summaries much faster than we could have on our own.
+v0's expertise in prompt engineering saved us countless hours of trial and error, allowing us to achieve high-quality summaries much faster than we could have on our own. We added prompting to hopefully avoid the tone of generated content, and adjusted the temperature property for more insightful language.
 
 ### 4. Responsive Design Implementation
 
@@ -103,7 +103,7 @@ v0's proficiency with Tailwind CSS and responsive design principles saved us app
 
 ### 5. Debugging and Problem-Solving
 
-Throughout the development process, Vercel v0 proved to be a valuable debugging partner. It helped identify issues in our code, suggested potential solutions, and explained the reasoning behind these solutions. This significantly reduced the time spent on troubleshooting, often cutting debugging time in half.
+Throughout the development process, Vercel v0 proved to be a valuable debugging partner. It helped identify issues in our code, suggested potential solutions, and explained the reasoning behind these solutions. This significantly reduced the time spent on troubleshooting, often cutting debugging time in half. Half of the bugs needed my redirection for solutioning, which v0 took feedback well on. This should be encouraging to existing software engineers that you won't be replaceable anytime soon!
 
 ## Benefits of Pair Programming with Vercel v0
 
