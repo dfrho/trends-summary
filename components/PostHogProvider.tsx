@@ -15,7 +15,7 @@ export function PostHogProvider({
   useEffect(() => {
     // Check that we're in the browser environment
     if (typeof window !== 'undefined') {
-      posthog.init(posthogKey, {
+      posthog.init(process.env.POSTHOG_API_KEY, {
         api_host: 'https://us.i.posthog.com',
         person_profiles: 'always',
         // Disable in development

@@ -55,7 +55,7 @@ export default function RootLayout({
               <nav className="p-4 flex justify-between items-center">
                 <div className="flex items-center space-x-4">
                   <h1 className="text-xl sm:text-2xl font-bold">
-                    Search Trends by State: Select a State for Results
+                    Search Trends by State
                   </h1>
                   <Link
                     href="https://github.com/dfrho/trends-summary"
