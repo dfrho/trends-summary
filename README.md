@@ -1,12 +1,12 @@
-# Accelerating MVP Development with Vercel v0: The Search by State Trends Project
+# Accelerating MVP Development with Vercel v0: The Search Trends by State Project
 
 ## Introduction
 
-Search by State Trends was an easy way to test AI as a pair programming partner to accelerate the development of a Minimum Viable Product (MVP). This outlines our experience using Vercel v0, an AI coding assistant, and the key areas where its assistance proved particularly valuable in reducing development time.
+Search Trends by State was an easy way to test AI as a pair programming partner to accelerate the development of a Minimum Viable Product (MVP). This outlines our experience using Vercel v0, an AI coding assistant, and the key areas where its assistance proved particularly valuable in reducing development time.
 
 ## Project Overview
 
-Search by State Trends is a web application that visualizes and summarizes Google search trends by state in the United States. (We parse the Google Trends "Share" to "XML" feeds when searched by state. Only a hobby learning project, using standard browser methods).
+Search Trends by State is a web application that visualizes and summarizes Google search trends by state in the United States. (We parse the Google Trends "Share" to "XML" feeds when searched by state. Only a hobby learning project, using standard browser methods).
 
 Our goal was to create a functional MVP that could:
 
@@ -38,7 +38,7 @@ Working with Vercel v0, we were able to complete the MVP in approximately 48 hou
 
 ## System Architecture
 
-The current architecture of Search by State Trends is designed for simplicity and real-time data processing:
+The current architecture of Search Trends by State is designed for simplicity and real-time data processing:
 
 1. **Data Fetching**: The application fetches real-time data from the Google Trends shared RSS feed for each selected state.
 
@@ -123,7 +123,7 @@ While pair programming with Vercel v0 was largely beneficial, we did encounter s
 
 ## Conclusion
 
-Our experience with Vercel v0 in developing Search by State Trends demonstrated its potential to significantly accelerate MVP development. By leveraging v0 for everything from architecture decisions to code implementation and debugging, we were able to bring our product to life in a fraction of the time it would have taken using traditional methods alone.
+Our experience with Vercel v0 in developing Search Trends by State demonstrated its potential to significantly accelerate MVP development. By leveraging v0 for everything from architecture decisions to code implementation and debugging, we were able to bring our product to life in a fraction of the time it would have taken using traditional methods alone.
 
 We estimate that using Vercel v0 as a pair programming partner reduced our overall development time by approximately 60%. This dramatic time saving allowed us to move from concept to functional MVP in just two days, a process that might have taken a week or more without v0's assistance.
 

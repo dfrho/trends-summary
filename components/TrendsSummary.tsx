@@ -168,7 +168,7 @@ export default function TrendsSummary() {
   return (
     <div className="w-[90%] sm:w-full max-w-4xl mx-auto bg-secondary shadow-md rounded-lg p-4 sm:p-6">
       <p className="text-xs sm:text-sm text-secondary mb-4">
-        Get AI-generated insights based on a U.S. state's{' '}
+        Click or tap on any state for a summary of it's{' '}
         <Link
           href="https://trends.google.com/trends/"
           target="_blank"
@@ -177,7 +177,7 @@ export default function TrendsSummary() {
         >
           Google Trends
         </Link>{' '}
-        shared RSS feed
+        shared RSS feed.
       </p>
       <USStateMap
         onStateSelect={handleStateSelect}
