@@ -78,15 +78,19 @@ const getFullStateName = (stateCode: string): string => {
 };
 
 export default function TrendsSummary() {
+  const [selectedState, setSelectedState] = useState<string | null>(null);
   const [location, setLocation] = useState<string>('US');
   const [locationName, setLocationName] = useState<string>('United States');
   const [trends, setTrends] = useState<TrendItem[]>([]);
   const [summary, setSummary] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isLocked, setIsLocked] = useState(false);
 
   const handleStateSelect = useCallback(
     (stateCode: string, stateName: string) => {
+      if (isLocked) return;
+
       console.log(`State selected: ${stateCode} - ${stateName}`);
       if (!stateCode || !stateName) {
         console.error('State code or name is undefined');
@@ -101,10 +105,12 @@ export default function TrendsSummary() {
           ? stateCode.slice(3)
           : stateCode;
       console.log(`Setting location to: ${apiStateCode}`);
+      setSelectedState(stateCode);
       setLocation(apiStateCode);
       setLocationName(getFullStateName(stateCode));
+      setIsLocked(true);
     },
-    []
+    [isLocked]
   );
 
   const fetchTrends = useCallback(async () => {
@@ -147,6 +153,10 @@ export default function TrendsSummary() {
       }
     } finally {
       setIsLoading(false);
+      // Keep the state locked for 3 more seconds after loading
+      setTimeout(() => {
+        setIsLocked(false);
+      }, 3000);
     }
   }, [location, locationName]);
 
@@ -157,7 +167,6 @@ export default function TrendsSummary() {
 
   return (
     <div className="w-[90%] sm:w-full max-w-4xl mx-auto bg-secondary shadow-md rounded-lg p-4 sm:p-6">
-      {' '}
       <p className="text-xs sm:text-sm text-secondary mb-4">
         Get AI-generated insights based on a U.S. state's{' '}
         <Link
@@ -170,7 +179,11 @@ export default function TrendsSummary() {
         </Link>{' '}
         shared RSS feed
       </p>
-      <USStateMap onStateSelect={handleStateSelect} />
+      <USStateMap
+        onStateSelect={handleStateSelect}
+        selectedState={selectedState}
+        isLocked={isLocked}
+      />
       {locationName && (
         <p className="text-xs sm:text-sm text-secondary mb-4 text-center">
           Current location: {locationName}
@@ -234,6 +247,7 @@ export default function TrendsSummary() {
                                   className="w-full sm:w-16 h-32 sm:h-16 object-cover rounded"
                                   onError={(e) => {
                                     e.currentTarget.onerror = null;
+
                                     e.currentTarget.src =
                                       '/placeholder.svg?height=80&width=80';
                                   }}

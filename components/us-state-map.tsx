@@ -7,6 +7,8 @@ const geoUrl = 'https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json';
 
 interface USStateMapProps {
   onStateSelect: (stateCode: string, stateName: string) => void;
+  selectedState: string | null;
+  isLocked: boolean;
 }
 
 const stateNameToCode: { [key: string]: string } = {
@@ -62,8 +64,14 @@ const stateNameToCode: { [key: string]: string } = {
   Wyoming: 'WY',
 };
 
-export function USStateMap({ onStateSelect }: USStateMapProps) {
+export function USStateMap({
+  onStateSelect,
+  selectedState,
+  isLocked,
+}: USStateMapProps) {
   const handleStateClick = (geo: any) => {
+    if (isLocked) return;
+
     const stateName = geo.properties?.name || '';
     const stateCode = stateNameToCode[stateName] || '';
 
@@ -81,33 +89,45 @@ export function USStateMap({ onStateSelect }: USStateMapProps) {
       <ComposableMap projection="geoAlbersUsa" className="w-full h-auto">
         <Geographies geography={geoUrl}>
           {({ geographies }) =>
-            geographies.map((geo) => (
-              <Geography
-                key={geo.rsmKey}
-                geography={geo}
-                onClick={() => handleStateClick(geo)}
-                style={{
-                  default: {
-                    fill: 'var(--color-map-fill)',
-                    stroke: 'var(--color-map-stroke)',
-                    strokeWidth: 0.5,
-                    outline: 'none',
-                  },
-                  hover: {
-                    fill: 'var(--color-map-hover)',
-                    stroke: 'var(--color-map-stroke)',
-                    strokeWidth: 0.5,
-                    outline: 'none',
-                  },
-                  pressed: {
-                    fill: 'var(--color-map-pressed)',
-                    stroke: 'var(--color-map-stroke)',
-                    strokeWidth: 0.5,
-                    outline: 'none',
-                  },
-                }}
-              />
-            ))
+            geographies.map((geo) => {
+              const stateName = geo.properties.name;
+              const stateCode = stateNameToCode[stateName];
+              const isSelected = `US-${stateCode}` === selectedState;
+              return (
+                <Geography
+                  key={geo.rsmKey}
+                  geography={geo}
+                  onClick={() => handleStateClick(geo)}
+                  style={{
+                    default: {
+                      fill: isSelected
+                        ? 'hsl(var(--color-map-selected))'
+                        : 'hsl(var(--color-map-fill))',
+                      stroke: 'hsl(var(--color-map-stroke))',
+                      strokeWidth: 0.5,
+                      outline: 'none',
+                    },
+                    hover: {
+                      fill: isLocked
+                        ? isSelected
+                          ? 'hsl(var(--color-map-selected))'
+                          : 'hsl(var(--color-map-fill))'
+                        : 'hsl(var(--color-map-hover))',
+                      stroke: 'hsl(var(--color-map-stroke))',
+                      strokeWidth: 0.5,
+                      outline: 'none',
+                      cursor: isLocked ? 'not-allowed' : 'pointer',
+                    },
+                    pressed: {
+                      fill: 'hsl(var(--color-map-pressed))',
+                      stroke: 'hsl(var(--color-map-stroke))',
+                      strokeWidth: 0.5,
+                      outline: 'none',
+                    },
+                  }}
+                />
+              );
+            })
           }
         </Geographies>
       </ComposableMap>
