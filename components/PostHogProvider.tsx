@@ -17,7 +17,7 @@ export function PostHogProvider({
     if (typeof window !== 'undefined') {
       posthog.init(posthogKey, {
         api_host: 'https://us.i.posthog.com',
-        person_profiles: 'identified_only',
+        person_profiles: 'always',
         // Disable in development
         loaded: (posthog) => {
           if (process.env.NODE_ENV === 'development')
