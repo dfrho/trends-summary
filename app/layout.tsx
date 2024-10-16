@@ -11,7 +11,7 @@ import { Github } from 'lucide-react';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Search Trend by State',
+  title: 'Search Trends by State',
   description: 'Explore real-time search trends for different states in the US',
   openGraph: {
     type: 'website',
@@ -55,7 +55,7 @@ export default function RootLayout({
               <nav className="p-4 flex justify-between items-center">
                 <div className="flex items-center space-x-4">
                   <h1 className="text-xl sm:text-2xl font-bold">
-                    Search by State Trends
+                    Search Trends by State: Select a State for Results
                   </h1>
                   <Link
                     href="https://github.com/dfrho/trends-summary"
