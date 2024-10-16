@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { Loader2, ImageOff } from 'lucide-react';
 import { USStateMap } from './us-state-map';
+import { Button } from '@/components/ui/Button';
 
 interface TrendItem {
   title: string;
@@ -165,15 +166,22 @@ export default function TrendsSummary() {
     fetchTrends();
   }, [fetchTrends]);
 
+  const getShareLink = () => {
+    if (location === 'US') {
+      return 'https://trends.google.com/trending?geo=US';
+    }
+    return `https://trends.google.com/trending?geo=US-${location}`;
+  };
+
   return (
-    <div className="w-[90%] sm:w-full max-w-4xl mx-auto bg-secondary shadow-md rounded-lg p-4 sm:p-6">
-      <p className="text-xs sm:text-sm text-secondary mb-4">
+    <div className="w-[90%] sm:w-full max-w-4xl mx-auto bg-background shadow-md rounded-lg p-4 sm:p-6">
+      <p className="text-xs sm:text-sm text-muted-foreground mb-4">
         Get AI-generated insights based on a U.S. state's{' '}
         <Link
           href="https://trends.google.com/trends/"
           target="_blank"
           rel="noopener noreferrer"
-          className="underline hover:text-slate-900 dark:hover:text-slate-100"
+          className="underline hover:text-foreground"
         >
           Google Trends
         </Link>{' '}
@@ -185,9 +193,18 @@ export default function TrendsSummary() {
         isLocked={isLocked}
       />
       {locationName && (
-        <p className="text-xs sm:text-sm text-secondary mb-4 text-center">
-          Current location: {locationName}
-        </p>
+        <div className="flex justify-between items-center mt-4">
+          <p className="text-xs sm:text-sm text-muted-foreground">
+            Current location: {locationName}
+          </p>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => window.open(getShareLink(), '_blank')}
+          >
+            View Source in Google Trends
+          </Button>
+        </div>
       )}
       {isLoading ? (
         <div className="flex items-center justify-center py-10">
@@ -202,31 +219,27 @@ export default function TrendsSummary() {
         <>
           {trends.length > 0 ? (
             <>
-              {summary ? (
+              {summary && (
                 <div className="mt-4 sm:mt-6">
-                  <div className="bg-secondary p-3 sm:p-4 rounded-lg">
-                    <p className="text-xs sm:text-sm text-primary whitespace-pre-wrap">
+                  <div className="bg-muted p-3 sm:p-4 rounded-lg">
+                    <p className="text-xs sm:text-sm text-foreground whitespace-pre-wrap">
                       {summary}
                     </p>
                   </div>
                 </div>
-              ) : (
-                <p className="text-secondary mt-4 text-sm">
-                  No summary available at the moment.
-                </p>
               )}
               <div className="mt-4 sm:mt-6">
-                <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-4 text-primary">
-                  Trending Topics
+                <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-4 text-foreground">
+                  Trending Topics in {locationName}
                 </h3>
                 <div className="space-y-4 sm:space-y-6">
                   {trends.map((trend, index) => (
                     <div
                       key={index}
-                      className="bg-primary border border-secondary p-3 sm:p-4 rounded-lg shadow-sm"
+                      className="bg-card border border-border p-3 sm:p-4 rounded-lg shadow-sm"
                     >
                       <div className="flex flex-col sm:flex-row items-start sm:items-center mb-2">
-                        <h4 className="text-base sm:text-lg font-semibold text-primary">
+                        <h4 className="text-base sm:text-lg font-semibold text-card-foreground">
                           {trend.title}
                         </h4>
                       </div>
@@ -238,7 +251,7 @@ export default function TrendsSummary() {
                               href={newsItem.url}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="flex flex-col sm:flex-row items-start space-y-2 sm:space-y-0 sm:space-x-3 hover:bg-secondary p-2 rounded transition duration-150 ease-in-out"
+                              className="flex flex-col sm:flex-row items-start space-y-2 sm:space-y-0 sm:space-x-3 hover:bg-muted p-2 rounded transition duration-150 ease-in-out"
                             >
                               {newsItem.picture ? (
                                 <img
@@ -247,26 +260,25 @@ export default function TrendsSummary() {
                                   className="w-full sm:w-16 h-32 sm:h-16 object-cover rounded"
                                   onError={(e) => {
                                     e.currentTarget.onerror = null;
-
                                     e.currentTarget.src =
                                       '/placeholder.svg?height=80&width=80';
                                   }}
                                 />
                               ) : (
-                                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-secondary flex items-center justify-center rounded">
-                                  <ImageOff className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
+                                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-muted flex items-center justify-center rounded">
+                                  <ImageOff className="w-6 h-6 sm:w-8 sm:h-8 text-muted-foreground" />
                                 </div>
                               )}
                               <div className="flex-1 min-w-0">
-                                <h5 className="font-medium text-xs sm:text-sm text-primary">
+                                <h5 className="font-medium text-xs sm:text-sm text-card-foreground">
                                   {newsItem.title}
                                 </h5>
                                 {newsItem.snippet && (
-                                  <p className="text-xs text-secondary mt-1 line-clamp-2">
+                                  <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
                                     {newsItem.snippet}
                                   </p>
                                 )}
-                                <p className="text-xs text-secondary mt-1">
+                                <p className="text-xs text-muted-foreground mt-1">
                                   {newsItem.source}
                                 </p>
                               </div>
@@ -279,14 +291,14 @@ export default function TrendsSummary() {
               </div>
             </>
           ) : (
-            <p className="text-secondary mt-4 text-sm">
+            <p className="text-muted-foreground mt-4 text-sm">
               No trending topics available at the moment.
             </p>
           )}
         </>
       )}
       <div className="flex items-center py-10">
-        <p className="text-xs sm:text-sm text-secondary mb-4 text-center">
+        <p className="text-xs sm:text-sm text-muted-foreground mb-4 text-center">
           Not for resale or integration; Research use only please. This project
           is not affiliated with or endorsed by Google.
         </p>

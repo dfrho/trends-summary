@@ -6,7 +6,7 @@ Search by State Trends was an easy way to test AI as a pair programming partner 
 
 ## Project Overview
 
-Search by State Trends is a web application that visualizes and summarizes Google search trends by state in the United States. (We parse the Google Trends "Share" to "XML" feeds when searched by state. Only a hobby learning project, using standard browser methods).
+Search by State Trends is a web application that visualizes and summarizes Google search trends by state in the United States. (We parse the Google Trends "Export" to "XML" feeds when searched by state. Only a hobby learning project, using standard browser methods).
 
 Our goal was to create a functional MVP that could:
 
@@ -40,7 +40,7 @@ Working with Vercel v0, we were able to complete the MVP in approximately 48 hou
 
 The current architecture of Search by State Trends is designed for simplicity and real-time data processing:
 
-1. **Data Fetching**: The application fetches real-time data from the Google Trends shared RSS feed for each selected state.
+1. **Data Fetching**: The application fetches real-time data from the Google Trends exported RSS feed for each selected state.
 
 2. **State Selection**: Users interact with an interactive US map to select a state of interest.
 
@@ -171,10 +171,10 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-- Google Trends shared RSS feed for the trending data
+- Google Trends exported RSS feed for the trending data
 - OpenAI for the GPT-3.5 model used in generating summaries
 - React Simple Maps for the interactive US map visualization
 
 ## Disclaimer
 
-This project is not affiliated with, endorsed, or sponsored by Google. It uses publicly available data from Google Trends client-shared RSS feed.
+This project is not affiliated with, endorsed, or sponsored by Google. It uses publicly available data from Google Trends client-exported RSS feed.
