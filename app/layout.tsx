@@ -44,11 +44,11 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const posthogKey = process.env.POSTHOG_KEY || '';
+  // const posthogKey = process.env.POSTHOG_KEY || '';
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <PostHogProvider posthogKey={posthogKey}>
+      <PostHogProvider>
         <body className={inter.className}>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <div className="min-h-screen bg-background text-foreground">
