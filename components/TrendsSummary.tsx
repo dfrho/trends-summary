@@ -176,7 +176,7 @@ export default function TrendsSummary() {
   return (
     <div className="w-[90%] sm:w-full max-w-4xl mx-auto bg-background shadow-md rounded-lg p-4 sm:p-6">
       <p className="text-xs sm:text-sm text-muted-foreground mb-4">
-        Select a State for its{' '}
+        Select a State for{' '}
         <Link
           href="https://trends.google.com/trends/"
           target="_blank"
