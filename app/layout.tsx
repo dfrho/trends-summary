@@ -44,18 +44,18 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const posthogKey = process.env.POSTHOG_KEY || '';
+  // const posthogKey = process.env.POSTHOG_KEY || '';
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <PostHogProvider posthogKey={posthogKey}>
+      <PostHogProvider>
         <body className={inter.className}>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <div className="min-h-screen bg-background text-foreground">
               <nav className="p-4 flex justify-between items-center">
                 <div className="flex items-center space-x-4">
                   <h1 className="text-xl sm:text-2xl font-bold">
-                    Search Trends by State: Select a State for Results
+                    Search Trends by State
                   </h1>
                   <Link
                     href="https://github.com/dfrho/trends-summary"
