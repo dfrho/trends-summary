@@ -104,7 +104,7 @@ export function USStateMap({
                         ? 'hsl(var(--color-map-selected))'
                         : 'hsl(var(--color-map-fill))',
                       stroke: 'hsl(var(--color-map-stroke))',
-                      strokeWidth: 0.5,
+                      strokeWidth: 1,
                       outline: 'none',
                     },
                     hover: {
@@ -114,14 +114,14 @@ export function USStateMap({
                           : 'hsl(var(--color-map-fill))'
                         : 'hsl(var(--color-map-hover))',
                       stroke: 'hsl(var(--color-map-stroke))',
-                      strokeWidth: 0.5,
+                      strokeWidth: 1,
                       outline: 'none',
                       cursor: isLocked ? 'not-allowed' : 'pointer',
                     },
                     pressed: {
                       fill: 'hsl(var(--color-map-pressed))',
                       stroke: 'hsl(var(--color-map-stroke))',
-                      strokeWidth: 0.5,
+                      strokeWidth: 1,
                       outline: 'none',
                     },
                   }}

@@ -2,7 +2,9 @@
 // @ts-ignore
 import { NextResponse } from 'next/server';
 import { XMLParser } from 'fast-xml-parser';
-import openai from '@/lib/openai';
+import Anthropic from '@anthropic-ai/sdk';
+import anthropic from '@/lib/anthropic';
+import { decodeHTMLEntities } from '@/lib/utils';
 
 interface NewsItem {
   title: string;
@@ -18,17 +20,6 @@ interface TrendItem {
   picture: string;
   pictureSource: string;
   newsItems: NewsItem[];
-}
-
-function decodeHTMLEntities(text: string | undefined): string {
-  if (typeof text !== 'string') {
-    return '';
-  }
-  return text.replace(/&amp;/g, '&')
-             .replace(/&lt;/g, '<')
-             .replace(/&gt;/g, '>')
-             .replace(/&quot;/g, '"')
-             .replace(/&#39;/g, "'");
 }
 
 export async function GET(request: Request) {
@@ -92,19 +83,22 @@ export async function GET(request: Request) {
 
     const prompt = `Based on the following trending topics in ${locationName}, provide a brief analysis of what these trends suggest about current interests and concerns in the area. Use maximum burstiness and perplexity: ${trends.map(t => t.title).join(', ')}`;
 
-    console.log('Sending request to OpenAI');
-    const aiResponse = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
-      messages: [{ role: "user", content: prompt }],
+    console.log('Sending request to Claude');
+    const aiResponse = await anthropic.messages.create({
+      model: 'claude-opus-4-8',
       max_tokens: 350,
-      temperature: 0.8,
+      messages: [{ role: 'user', content: prompt }],
     });
 
-    if (!aiResponse.choices || aiResponse.choices.length === 0) {
-      throw new Error('No response from OpenAI');
+    const textBlock = aiResponse.content.find(
+      (block): block is Anthropic.Messages.TextBlock => block.type === 'text'
+    );
+
+    if (!textBlock) {
+      throw new Error('No text response from Claude');
     }
 
-    const summary = aiResponse.choices[0].message.content?.trim();
+    const summary = textBlock.text.trim();
     console.log('Successfully generated AI summary');
 
     return NextResponse.json({ trends, summary });

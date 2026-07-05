@@ -1,14 +1,21 @@
 import './globals.css';
-import { Inter } from 'next/font/google';
+import { Overpass, Ultra } from 'next/font/google';
 import { ThemeProvider } from 'next-themes';
 import Link from 'next/link';
 import { DarkModeToggle } from '../components/DarkModeToggle';
 import { Metadata } from 'next';
-import { PostHogProvider } from '../components/PostHogProvider';
-import { CookieBanner } from '../components/CookieBanner';
-import { Github } from 'lucide-react';
+import { Github, Compass } from 'lucide-react';
 
-const inter = Inter({ subsets: ['latin'] });
+const overpass = Overpass({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-body',
+});
+const ultra = Ultra({
+  subsets: ['latin'],
+  weight: '400',
+  variable: '--font-display',
+});
 
 export const metadata: Metadata = {
   title: 'Search Trends by State',
@@ -44,37 +51,49 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const posthogKey = process.env.POSTHOG_KEY || '';
-
   return (
     <html lang="en" suppressHydrationWarning>
-      <PostHogProvider posthogKey={posthogKey}>
-        <body className={inter.className}>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <div className="min-h-screen bg-background text-foreground">
-              <nav className="p-4 flex justify-between items-center">
-                <div className="flex items-center space-x-4">
-                  <h1 className="text-xl sm:text-2xl font-bold">
-                    Search Trends by State: Select a State for Results
-                  </h1>
-                  <Link
-                    href="https://github.com/dfrho/trends-summary"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100"
-                  >
-                    <Github className="w-6 h-6" />
-                    <span className="sr-only">GitHub repository</span>
-                  </Link>
-                </div>
-                <DarkModeToggle />
-              </nav>
-              <main className="container mx-auto px-4 py-8">{children}</main>
-              <CookieBanner />
-            </div>
-          </ThemeProvider>
-        </body>
-      </PostHogProvider>
+      <body
+        className={`${overpass.variable} ${ultra.variable} font-sans bg-background text-foreground`}
+      >
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <div className="min-h-screen">
+            <nav className="max-w-4xl mx-auto px-4 sm:px-6 py-5 flex justify-between items-center">
+              <div className="flex items-center gap-2.5">
+                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-primary-foreground ring-2 ring-primary ring-offset-2 ring-offset-background">
+                  <Compass className="h-[18px] w-[18px]" />
+                </span>
+                <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-muted-foreground">
+                  Search Trends by State
+                </span>
+                <Link
+                  href="https://github.com/dfrho/trends-summary"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <Github className="w-5 h-5" />
+                  <span className="sr-only">GitHub repository</span>
+                </Link>
+              </div>
+              <DarkModeToggle />
+            </nav>
+
+            <header className="relative overflow-hidden border-b border-border text-center px-4 sm:px-6 py-12 sm:py-16 bg-[radial-gradient(circle_at_50%_15%,hsl(var(--accent)/0.08),transparent_60%)]">
+              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-accent mb-3.5">
+                Est. Nationwide &middot; Field Edition
+              </p>
+              <h1 className="font-display text-4xl sm:text-6xl leading-[1.05] text-primary text-balance">
+                What&rsquo;s Trending
+                <br />
+                in Every State
+              </h1>
+            </header>
+
+            <main className="container mx-auto px-4 py-8">{children}</main>
+          </div>
+        </ThemeProvider>
+      </body>
     </html>
   );
 }

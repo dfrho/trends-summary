@@ -34,7 +34,7 @@ Working with Vercel v0, we were able to complete the MVP in approximately 48 hou
 - Backend: Next.js API routes
 - Map Visualization: react-simple-maps
 - Trend Data: Google Trends RSS feed
-- AI Summary: OpenAI GPT-3.5
+- AI Summary: Anthropic Claude (Claude Opus 4.8)
 
 ## System Architecture
 
@@ -46,7 +46,7 @@ The current architecture of Search by State Trends is designed for simplicity an
 
 3. **Trend Processing**: When a state is selected, the backend processes the RSS feed data to extract relevant trend information.
 
-4. **AI Summary Generation**: The extracted trend data is sent to OpenAI's GPT-3.5 model, which generates a concise summary of the trending topics.
+4. **AI Summary Generation**: The extracted trend data is sent to Anthropic's Claude Opus 4.8 model, which generates a concise summary of the trending topics.
 
 5. **Display**: The frontend displays both the raw trend data and the AI-generated summary to the user.
 
@@ -147,9 +147,9 @@ As we move forward, we plan to further integrate Vercel v0 into our development 
      ```
      cp .env.example .env.local
      ```
-   - Open `.env.local` and replace `your_openai_api_key_here` with your actual OpenAI API key:
+   - Open `.env.local` and replace `your_anthropic_api_key_here` with your actual Anthropic API key:
      ```
-     OPENAI_API_KEY=sk-your-actual-api-key
+     ANTHROPIC_API_KEY=sk-ant-your-actual-api-key
      ```
    
    Note: Make sure to keep your API key confidential and never commit it to version control.
@@ -172,7 +172,7 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 ## Acknowledgments
 
 - Google Trends exported RSS feed for the trending data
-- OpenAI for the GPT-3.5 model used in generating summaries
+- Anthropic for the Claude model used in generating summaries
 - React Simple Maps for the interactive US map visualization
 
 ## Disclaimer

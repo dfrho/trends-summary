@@ -14,15 +14,21 @@ export function DarkModeToggle() {
   }, []);
 
   if (!mounted) {
-    return <Button variant="ghost" size="icon" className="w-10 h-10" />;
+    return (
+      <Button
+        variant="outline"
+        size="icon"
+        className="w-10 h-10 rounded-full border-border"
+      />
+    );
   }
 
   return (
     <Button
-      variant="ghost"
+      variant="outline"
       size="icon"
       onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-      className="w-10 h-10"
+      className="w-10 h-10 rounded-full border-border hover:bg-primary hover:text-primary-foreground hover:border-primary"
     >
       <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
       <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />

@@ -4,79 +4,80 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* WPA National Parks palette — cream paper, forest green, rust, mustard */
+    --background: 41.8 57.9% 88.8%;
+    --foreground: 32 29.4% 10%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
- 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
- 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
- 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
- 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
- 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
- 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --card: 42.5 75% 93.7%;
+    --card-foreground: 32 29.4% 10%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
- 
-    --radius: 0.5rem;
+    --popover: 42.5 75% 93.7%;
+    --popover-foreground: 32 29.4% 10%;
+
+    --primary: 158.2 41.5% 20.8%;
+    --primary-foreground: 42.5 75% 93.7%;
+
+    --secondary: 39.1 66.7% 55.3%;
+    --secondary-foreground: 32 29.4% 10%;
+
+    --muted: 43.4 50.5% 81.8%;
+    --muted-foreground: 41.7 24.3% 29%;
+
+    --accent: 21.7 75.5% 43.1%;
+    --accent-foreground: 42.5 75% 93.7%;
+
+    --destructive: 5.5 58.9% 43.9%;
+    --destructive-foreground: 42.5 75% 93.7%;
+
+    --border: 44 30% 60.8%;
+    --input: 44 30% 60.8%;
+    --ring: 158.2 41.5% 20.8%;
+
+    --radius: 0.85rem;
 
     /* Map-related CSS variables */
-    --color-map-fill: 220 13% 91%;
-    --color-map-stroke: 220 9% 65%;
-    --color-map-hover: 217 91% 60%;
-    --color-map-pressed: 217 91% 60%;
-    --color-map-selected: 217 91% 60%;
+    --color-map-fill: 43.4 50.5% 81.8%;
+    --color-map-stroke: 158.2 41.5% 20.8%;
+    --color-map-hover: 21.7 75.5% 43.1%;
+    --color-map-pressed: 21.7 75.5% 43.1%;
+    --color-map-selected: 21.7 75.5% 43.1%;
   }
- 
+
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
- 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
- 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
- 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
- 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
- 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
- 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
- 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
- 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --background: 147.3 20.8% 10.4%;
+    --foreground: 43.8 56.9% 87.3%;
+
+    --card: 145.7 20% 13.7%;
+    --card-foreground: 43.8 56.9% 87.3%;
+
+    --popover: 145.7 20% 13.7%;
+    --popover-foreground: 43.8 56.9% 87.3%;
+
+    --primary: 150.6 26.1% 60.2%;
+    --primary-foreground: 147.3 20.8% 10.4%;
+
+    --secondary: 40.6 72.6% 65.7%;
+    --secondary-foreground: 147.3 20.8% 10.4%;
+
+    --muted: 138.5 16.9% 15.1%;
+    --muted-foreground: 44.1 31.2% 69.2%;
+
+    --accent: 22.3 73.9% 56.5%;
+    --accent-foreground: 147.3 20.8% 10.4%;
+
+    --destructive: 1.7 64.5% 58%;
+    --destructive-foreground: 147.3 20.8% 10.4%;
+
+    --border: 135.8 13.7% 27.3%;
+    --input: 135.8 13.7% 27.3%;
+    --ring: 150.6 26.1% 60.2%;
 
     /* Dark mode map-related CSS variables */
-    --color-map-fill: 215 28% 17%;
-    --color-map-stroke: 215 20% 65%;
-    --color-map-hover: 217 91% 60%;
-    --color-map-pressed: 217 91% 60%;
-    --color-map-selected: 217 91% 60%;
+    --color-map-fill: 145.7 20% 13.7%;
+    --color-map-stroke: 150.6 26.1% 60.2%;
+    --color-map-hover: 22.3 73.9% 56.5%;
+    --color-map-pressed: 22.3 73.9% 56.5%;
+    --color-map-selected: 22.3 73.9% 56.5%;
   }
 }
 

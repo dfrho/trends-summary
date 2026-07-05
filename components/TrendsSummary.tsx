@@ -174,32 +174,39 @@ export default function TrendsSummary() {
   };
 
   return (
-    <div className="w-[90%] sm:w-full max-w-4xl mx-auto bg-background shadow-md rounded-lg p-4 sm:p-6">
-      <p className="text-xs sm:text-sm text-muted-foreground mb-4">
-        Get AI-generated insights based on a U.S. state's{' '}
-        <Link
-          href="https://trends.google.com/trends/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="underline hover:text-foreground"
-        >
-          Google Trends
-        </Link>{' '}
-        shared RSS feed
-      </p>
-      <USStateMap
-        onStateSelect={handleStateSelect}
-        selectedState={selectedState}
-        isLocked={isLocked}
-      />
+    <div className="w-[90%] sm:w-full max-w-4xl mx-auto">
+      <div className="rounded-2xl border-2 border-primary bg-card p-6 sm:p-7 shadow-[0_10px_24px_-12px_hsl(var(--foreground)/0.25)]">
+        <p className="text-[11px] sm:text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground text-center mb-4 sm:mb-5">
+          Select a Region to Explore
+        </p>
+        <USStateMap
+          onStateSelect={handleStateSelect}
+          selectedState={selectedState}
+          isLocked={isLocked}
+        />
+        <p className="text-xs text-muted-foreground text-center mt-4">
+          Get AI-generated insights based on a U.S. state&rsquo;s{' '}
+          <Link
+            href="https://trends.google.com/trends/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline hover:text-foreground"
+          >
+            Google Trends
+          </Link>{' '}
+          shared RSS feed
+        </p>
+      </div>
       {locationName && (
-        <div className="flex justify-between items-center mt-4">
+        <div className="flex justify-between items-center mt-5 gap-3 flex-wrap">
           <p className="text-xs sm:text-sm text-muted-foreground">
-            Current location: {locationName}
+            Current location:{' '}
+            <strong className="text-primary font-bold">{locationName}</strong>
           </p>
           <Button
             variant="outline"
             size="sm"
+            className="uppercase text-xs tracking-wide font-bold border-[1.5px] border-primary text-primary hover:bg-primary hover:text-primary-foreground bg-transparent"
             onClick={() => window.open(getShareLink(), '_blank')}
           >
             View Source in Google Trends
@@ -220,29 +227,40 @@ export default function TrendsSummary() {
           {trends.length > 0 ? (
             <>
               {summary && (
-                <div className="mt-4 sm:mt-6">
-                  <div className="bg-muted p-3 sm:p-4 rounded-lg">
+                <div className="mt-5 sm:mt-6">
+                  <div className="bg-card rounded-xl p-4 sm:p-5 border-l-4 border-secondary">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-accent mb-2">
+                      Field Notes
+                    </p>
                     <p className="text-xs sm:text-sm text-foreground whitespace-pre-wrap">
                       {summary}
                     </p>
                   </div>
                 </div>
               )}
-              <div className="mt-4 sm:mt-6">
-                <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-4 text-foreground">
+              <div className="mt-8 sm:mt-10">
+                <h3 className="font-display text-xl sm:text-2xl mb-4 sm:mb-5 text-primary">
                   Trending Topics in {locationName}
                 </h3>
-                <div className="space-y-4 sm:space-y-6">
+                <div className="space-y-4 sm:space-y-5">
                   {trends.map((trend, index) => (
                     <div
                       key={index}
-                      className="bg-card border border-border p-3 sm:p-4 rounded-lg shadow-sm"
+                      className="bg-card border border-border p-4 sm:p-5 rounded-xl"
                     >
-                      <div className="flex flex-col sm:flex-row items-start sm:items-center mb-2">
-                        <h4 className="text-base sm:text-lg font-semibold text-card-foreground">
+                      <div className="flex items-center gap-2.5 mb-1">
+                        <span className="flex h-[22px] w-[22px] shrink-0 items-center justify-center rounded-full bg-secondary text-[11px] font-bold text-primary-foreground">
+                          {index + 1}
+                        </span>
+                        <h4 className="text-base sm:text-lg font-bold text-card-foreground">
                           {trend.title}
                         </h4>
                       </div>
+                      {trend.traffic && (
+                        <p className="text-[11px] font-bold uppercase tracking-wide text-accent ml-[30px] mb-3">
+                          {trend.traffic}
+                        </p>
+                      )}
                       <div className="grid grid-cols-1 gap-3 sm:gap-4 px-2 sm:px-4">
                         {trend.newsItems &&
                           trend.newsItems.map((newsItem, newsIndex) => (
@@ -251,13 +269,13 @@ export default function TrendsSummary() {
                               href={newsItem.url}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="flex flex-col sm:flex-row items-start space-y-2 sm:space-y-0 sm:space-x-3 hover:bg-muted p-2 rounded transition duration-150 ease-in-out"
+                              className="flex flex-col sm:flex-row items-start space-y-2 sm:space-y-0 sm:space-x-3 hover:bg-muted p-2 rounded-lg transition duration-150 ease-in-out"
                             >
                               {newsItem.picture ? (
                                 <img
                                   src={newsItem.picture}
                                   alt={newsItem.title}
-                                  className="w-full sm:w-16 h-32 sm:h-16 object-cover rounded"
+                                  className="w-full sm:w-16 h-32 sm:h-16 object-cover rounded-lg"
                                   onError={(e) => {
                                     e.currentTarget.onerror = null;
                                     e.currentTarget.src =
@@ -265,12 +283,12 @@ export default function TrendsSummary() {
                                   }}
                                 />
                               ) : (
-                                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-muted flex items-center justify-center rounded">
-                                  <ImageOff className="w-6 h-6 sm:w-8 sm:h-8 text-muted-foreground" />
+                                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center rounded-lg">
+                                  <ImageOff className="w-6 h-6 sm:w-8 sm:h-8 text-primary-foreground" />
                                 </div>
                               )}
                               <div className="flex-1 min-w-0">
-                                <h5 className="font-medium text-xs sm:text-sm text-card-foreground">
+                                <h5 className="font-semibold text-xs sm:text-sm text-card-foreground">
                                   {newsItem.title}
                                 </h5>
                                 {newsItem.snippet && (
@@ -278,7 +296,7 @@ export default function TrendsSummary() {
                                     {newsItem.snippet}
                                   </p>
                                 )}
-                                <p className="text-xs text-muted-foreground mt-1">
+                                <p className="text-[11px] font-bold uppercase tracking-wide text-accent mt-1">
                                   {newsItem.source}
                                 </p>
                               </div>
@@ -297,9 +315,9 @@ export default function TrendsSummary() {
           )}
         </>
       )}
-      <div className="flex items-center py-10">
-        <p className="text-xs sm:text-sm text-muted-foreground mb-4 text-center">
-          Not for resale or integration; Research use only please. This project
+      <div className="flex items-center py-10 border-t border-border mt-10">
+        <p className="text-[11px] sm:text-xs text-muted-foreground mx-auto text-center">
+          Not for resale or integration; research use only please. This project
           is not affiliated with or endorsed by Google.
         </p>
       </div>
