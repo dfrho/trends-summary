@@ -31,6 +31,31 @@ const SIGNAL_CLASSES = [
 
 const eyebrow = 'font-mono text-sm tracking-[0.04em]';
 
+// Placeholder rows shown while the feed loads. Widths vary so it reads as text.
+const SKELETON_ROWS = [
+  { title: '82%', news: ['92%', '74%', '85%'] },
+  { title: '48%', news: ['80%', '88%', '66%'] },
+  { title: '66%', news: ['86%', '70%', '78%'] },
+  { title: '38%', news: ['72%', '90%'] },
+];
+
+function Bone({
+  className = '',
+  style,
+}: {
+  className?: string;
+  style?: React.CSSProperties;
+}) {
+  return (
+    <div
+      style={style}
+      className={`bg-border motion-safe:animate-pulse ${
+        className.includes('rounded-') ? '' : 'rounded-md'
+      } ${className}`}
+    />
+  );
+}
+
 export default function TrendsSummary() {
   // 'US' is the national feed; otherwise a two-letter state code.
   const [location, setLocation] = useState<string>('US');
@@ -133,6 +158,16 @@ export default function TrendsSummary() {
             </p>
           )}
 
+          {isLoading && (
+            <div aria-hidden="true" className="flex max-w-[56ch] flex-col gap-3">
+              <Bone className="h-3.5 w-56" />
+              <Bone className="h-5 w-full" />
+              <Bone className="h-5 w-[96%]" />
+              <Bone className="h-5 w-[90%]" />
+              <Bone className="h-5 w-[58%]" />
+            </div>
+          )}
+
           {hasError && (
             <div className="mt-2 flex flex-col items-start gap-3">
               <p role="alert" className="text-lg sm:text-xl">
@@ -221,6 +256,31 @@ export default function TrendsSummary() {
           />
         </section>
       </div>
+
+      {isLoading && (
+        <section aria-hidden="true" className="flex flex-col gap-2">
+          <div className="pb-3">
+            <Bone className="h-8 w-[min(100%,28rem)]" />
+          </div>
+          {SKELETON_ROWS.map((row, index) => (
+            <div
+              key={index}
+              className="flex flex-wrap items-start gap-x-6 gap-y-4 border-t border-border py-5"
+            >
+              <Bone className="h-12 w-12 shrink-0 rounded-full" />
+              <div className="flex min-w-0 flex-[1_1_300px] flex-col gap-2 pt-1">
+                <Bone className="h-6" style={{ width: row.title }} />
+                <Bone className="h-3.5 w-24" />
+              </div>
+              <div className="flex min-w-0 flex-[2_1_420px] flex-col gap-4 pt-2">
+                {row.news.map((width, newsIndex) => (
+                  <Bone key={newsIndex} className="h-4" style={{ width }} />
+                ))}
+              </div>
+            </div>
+          ))}
+        </section>
+      )}
 
       {showResults && trends.length > 0 && (
         <section className="flex flex-col gap-2">
