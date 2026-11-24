@@ -2,14 +2,14 @@
 
 ![Search by State Trends screenshot](public/search_trends_screenshot.png)
 
-An interactive US map that shows what's trending on Google in any state, summarized by Claude.
+A search forecast for every US state: pick a state and see what's trending on Google there, summarized by Claude.
 
 ## What it does
 
-1. Click a state on the map.
+1. Pick a state on the tile map or from the dropdown.
 2. The app fetches that state's real-time Google Trends feed.
-3. Claude (Anthropic API) reads the trends and generates a short, plain-language summary.
-4. Raw trends and the AI summary are shown side by side.
+3. Claude (Anthropic API) reads the trends and writes a three-sentence outlook.
+4. The outlook sits beside the map, with the ranked trends and their news sources below.
 
 No database, no auth, no persistent storage — just a live lookup against Google Trends and a Claude call for the summary.
 
@@ -18,7 +18,6 @@ No database, no auth, no persistent storage — just a live lookup against Googl
 - **Next.js** (App Router, API routes) + React
 - **Google Trends** RSS/XML export, parsed server-side
 - **Claude API** (Anthropic) for trend summaries
-- **react-simple-maps** for the US map
 - **Tailwind CSS** for styling
 - **Vitest** for tests
 
