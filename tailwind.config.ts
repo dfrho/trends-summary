@@ -19,10 +19,20 @@ const config: Config = {
     extend: {
       fontFamily: {
         sans: ["var(--font-body)", "sans-serif"],
-        display: ["var(--font-display)", "serif"],
+        display: ["var(--font-display)", "sans-serif"],
+        mono: ["var(--font-mono)", "ui-monospace", "monospace"],
       },
       colors: {
         border: "hsl(var(--border))",
+        link: "var(--link)",
+        tile: "var(--tile-border)",
+        "ring-line": "var(--ring-line)",
+        signal: {
+          1: "var(--signal-1)",
+          2: "var(--signal-2)",
+          3: "var(--signal-3)",
+          4: "var(--signal-4)",
+        },
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",

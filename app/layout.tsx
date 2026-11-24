@@ -1,19 +1,24 @@
 import './globals.css';
-import { Overpass, Ultra } from 'next/font/google';
+import { Archivo, IBM_Plex_Mono, IBM_Plex_Sans } from 'next/font/google';
 import { ThemeProvider } from 'next-themes';
 import Link from 'next/link';
 import { DarkModeToggle } from '../components/DarkModeToggle';
 import { Metadata } from 'next';
-import { Github, Compass } from 'lucide-react';
 
-const overpass = Overpass({
+const plexSans = IBM_Plex_Sans({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
+  weight: ['400', '500', '600'],
   variable: '--font-body',
 });
-const ultra = Ultra({
+const plexMono = IBM_Plex_Mono({
   subsets: ['latin'],
-  weight: '400',
+  weight: ['400', '500'],
+  variable: '--font-mono',
+});
+// Variable font with the width axis, so headings can be set at 125% width.
+const archivo = Archivo({
+  subsets: ['latin'],
+  axes: ['wdth'],
   variable: '--font-display',
 });
 
@@ -54,43 +59,45 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${overpass.variable} ${ultra.variable} font-sans bg-background text-foreground`}
+        className={`${plexSans.variable} ${plexMono.variable} ${archivo.variable} font-sans bg-background text-foreground`}
       >
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem={false}
+        >
           <div className="min-h-screen">
-            <nav className="max-w-4xl mx-auto px-4 sm:px-6 py-5 flex justify-between items-center">
-              <div className="flex items-center gap-2.5">
-                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-primary-foreground ring-2 ring-primary ring-offset-2 ring-offset-background">
-                  <Compass className="h-[18px] w-[18px]" />
-                </span>
-                <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-muted-foreground">
-                  Search Trends by State
-                </span>
-                <Link
-                  href="https://github.com/dfrho/trends-summary"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  <Github className="w-5 h-5" />
-                  <span className="sr-only">GitHub repository</span>
-                </Link>
-              </div>
-              <DarkModeToggle />
-            </nav>
-
-            <header className="relative overflow-hidden border-b border-border text-center px-4 sm:px-6 py-12 sm:py-16 bg-[radial-gradient(circle_at_50%_15%,hsl(var(--accent)/0.08),transparent_60%)]">
-              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-accent mb-3.5">
-                Est. Nationwide &middot; Field Edition
-              </p>
-              <h1 className="font-display text-4xl sm:text-6xl leading-[1.05] text-primary text-balance">
-                What&rsquo;s Trending
-                <br />
-                in Every State
-              </h1>
+            <header className="border-b border-border">
+              <nav className="mx-auto flex max-w-[1200px] flex-wrap items-center justify-between gap-3 px-4 py-3.5 sm:px-6">
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                  <span
+                    aria-hidden="true"
+                    className="h-3 w-3 rounded-full bg-signal-1"
+                  />
+                  <span className="font-display text-sm font-extrabold uppercase tracking-[0.06em] sm:text-base">
+                    Search Trends by State
+                  </span>
+                  <span className="font-mono text-[13px] text-muted-foreground">
+                    Live feed
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  {/* The page portals its Download PDF button in here */}
+                  <div id="nav-actions" className="contents" />
+                  <Link
+                    href="https://github.com/dfrho/trends-summary"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-2.5 py-3 text-sm font-medium text-link underline underline-offset-4 hover:text-foreground"
+                  >
+                    GitHub
+                  </Link>
+                  <DarkModeToggle />
+                </div>
+              </nav>
             </header>
 
-            <main className="container mx-auto px-4 py-8">{children}</main>
+            {children}
           </div>
         </ThemeProvider>
       </body>

@@ -1,10 +1,9 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
-import Link from 'next/link';
-import { Loader2, ImageOff } from 'lucide-react';
-import { USStateMap } from './us-state-map';
-import { Button } from '@/components/ui/Button';
+import { useState, useEffect, useCallback, useRef } from 'react';
+import { StateTileMap } from './StateTileMap';
+import { DownloadPdfButton } from './DownloadPdfButton';
+import { STATES_BY_NAME, stateName } from '@/lib/states';
 
 interface TrendItem {
   title: string;
@@ -22,111 +21,54 @@ interface NewsItem {
   source: string;
 }
 
-const getFullStateName = (stateCode: string): string => {
-  const fullNames: { [key: string]: string } = {
-    'US-AL': 'Alabama',
-    'US-AK': 'Alaska',
-    'US-AZ': 'Arizona',
-    'US-AR': 'Arkansas',
-    'US-CA': 'California',
-    'US-CO': 'Colorado',
-    'US-CT': 'Connecticut',
-    'US-DE': 'Delaware',
-    'US-FL': 'Florida',
-    'US-GA': 'Georgia',
-    'US-HI': 'Hawaii',
-    'US-ID': 'Idaho',
-    'US-IL': 'Illinois',
-    'US-IN': 'Indiana',
-    'US-IA': 'Iowa',
-    'US-KS': 'Kansas',
-    'US-KY': 'Kentucky',
-    'US-LA': 'Louisiana',
-    'US-ME': 'Maine',
-    'US-MD': 'Maryland',
-    'US-MA': 'Massachusetts',
-    'US-MI': 'Michigan',
-    'US-MN': 'Minnesota',
-    'US-MS': 'Mississippi',
-    'US-MO': 'Missouri',
-    'US-MT': 'Montana',
-    'US-NE': 'Nebraska',
-    'US-NV': 'Nevada',
-    'US-NH': 'New Hampshire',
-    'US-NJ': 'New Jersey',
-    'US-NM': 'New Mexico',
-    'US-NY': 'New York',
-    'US-NC': 'North Carolina',
-    'US-ND': 'North Dakota',
-    'US-OH': 'Ohio',
-    'US-OK': 'Oklahoma',
-    'US-OR': 'Oregon',
-    'US-PA': 'Pennsylvania',
-    'US-RI': 'Rhode Island',
-    'US-SC': 'South Carolina',
-    'US-SD': 'South Dakota',
-    'US-TN': 'Tennessee',
-    'US-TX': 'Texas',
-    'US-UT': 'Utah',
-    'US-VT': 'Vermont',
-    'US-VA': 'Virginia',
-    'US-WA': 'Washington',
-    'US-WV': 'West Virginia',
-    'US-WI': 'Wisconsin',
-    'US-WY': 'Wyoming',
-  };
-  return fullNames[stateCode] || 'United States';
-};
+// Rank in the feed, strongest first. Ranks past the fourth share the last color.
+const SIGNAL_CLASSES = [
+  'bg-signal-1',
+  'bg-signal-2',
+  'bg-signal-3',
+  'bg-signal-4',
+];
+
+const eyebrow = 'font-mono text-sm tracking-[0.04em]';
 
 export default function TrendsSummary() {
-  const [selectedState, setSelectedState] = useState<string | null>(null);
+  // 'US' is the national feed; otherwise a two-letter state code.
   const [location, setLocation] = useState<string>('US');
-  const [locationName, setLocationName] = useState<string>('United States');
   const [trends, setTrends] = useState<TrendItem[]>([]);
   const [summary, setSummary] = useState<string>('');
-  const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [hasError, setHasError] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isLocked, setIsLocked] = useState(false);
+  const forecastRef = useRef<HTMLElement>(null);
 
-  const handleStateSelect = useCallback(
-    (stateCode: string, stateName: string) => {
-      if (isLocked) return;
+  const locationName = location === 'US' ? 'United States' : stateName(location);
+  const selectedState = location === 'US' ? null : location;
 
-      console.log(`State selected: ${stateCode} - ${stateName}`);
-      if (!stateCode || !stateName) {
-        console.error('State code or name is undefined');
-        setError('Invalid state selection');
-        return;
-      }
-
-      const apiStateCode =
-        stateCode === 'US'
-          ? 'US'
-          : stateCode.startsWith('US-')
-          ? stateCode.slice(3)
-          : stateCode;
-      console.log(`Setting location to: ${apiStateCode}`);
-      setSelectedState(stateCode);
-      setLocation(apiStateCode);
-      setLocationName(getFullStateName(stateCode));
+  const handleSelect = useCallback(
+    (code: string) => {
+      if (isLocked || code === location) return;
+      setLocation(code);
       setIsLocked(true);
+
+      // The forecast sits above the map on small screens: bring it back into view.
+      const el = forecastRef.current;
+      if (el && el.getBoundingClientRect().top < 0) {
+        const reduceMotion = window.matchMedia(
+          '(prefers-reduced-motion: reduce)'
+        ).matches;
+        el.scrollIntoView({
+          behavior: reduceMotion ? 'auto' : 'smooth',
+          block: 'start',
+        });
+      }
     },
-    [isLocked]
+    [isLocked, location]
   );
 
   const fetchTrends = useCallback(async () => {
-    if (!location || !locationName) {
-      console.error('Location or locationName is undefined');
-      setError('Invalid location data');
-      return;
-    }
-
     setIsLoading(true);
-    setError(null);
+    setHasError(false);
     try {
-      console.log(
-        `Fetching trends for location: ${location}, name: ${locationName}`
-      );
       const response = await fetch(
         `/api/trends?location=${location}&locationName=${encodeURIComponent(
           locationName
@@ -136,7 +78,6 @@ export default function TrendsSummary() {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = await response.json();
-      console.log('Received trends data:', data);
       if (data.error) {
         throw new Error(data.error);
       }
@@ -147,14 +88,12 @@ export default function TrendsSummary() {
       setSummary(data.summary || '');
     } catch (err) {
       console.error('Error fetching trends:', err);
-      if (err instanceof Error) {
-        setError(`Failed to fetch trends data: ${err.message}`);
-      } else {
-        setError('Failed to fetch trends data: Unknown error');
-      }
+      setTrends([]);
+      setSummary('');
+      setHasError(true);
     } finally {
       setIsLoading(false);
-      // Keep the state locked for 3 more seconds after loading
+      // Keep the picker locked for 3 more seconds after loading
       setTimeout(() => {
         setIsLocked(false);
       }, 3000);
@@ -162,165 +101,192 @@ export default function TrendsSummary() {
   }, [location, locationName]);
 
   useEffect(() => {
-    console.log('Effect triggered. Fetching trends...');
     fetchTrends();
   }, [fetchTrends]);
 
-  const getShareLink = () => {
-    if (location === 'US') {
-      return 'https://trends.google.com/trending?geo=US';
-    }
-    return `https://trends.google.com/trending?geo=US-${location}`;
-  };
+  const sourceLink =
+    location === 'US'
+      ? 'https://trends.google.com/trending?geo=US'
+      : `https://trends.google.com/trending?geo=US-${location}`;
+
+  const showResults = !isLoading && !hasError;
 
   return (
-    <div className="w-[90%] sm:w-full max-w-4xl mx-auto">
-      <div className="rounded-2xl border-2 border-primary bg-card p-6 sm:p-7 shadow-[0_10px_24px_-12px_hsl(var(--foreground)/0.25)]">
-        <p className="text-[11px] sm:text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground text-center mb-4 sm:mb-5">
-          Select a Region to Explore
-        </p>
-        <USStateMap
-          onStateSelect={handleStateSelect}
-          selectedState={selectedState}
-          isLocked={isLocked}
-        />
-        <p className="text-xs text-muted-foreground text-center mt-4">
-          Get AI-generated insights based on a U.S. state&rsquo;s{' '}
-          <Link
-            href="https://trends.google.com/trends/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline hover:text-foreground"
-          >
-            Google Trends
-          </Link>{' '}
-          shared RSS feed
-        </p>
-      </div>
-      {locationName && (
-        <div className="flex justify-between items-center mt-5 gap-3 flex-wrap">
-          <p className="text-xs sm:text-sm text-muted-foreground">
-            Current location:{' '}
-            <strong className="text-primary font-bold">{locationName}</strong>
-          </p>
-          <Button
-            variant="outline"
-            size="sm"
-            className="uppercase text-xs tracking-wide font-bold border-[1.5px] border-primary text-primary hover:bg-primary hover:text-primary-foreground bg-transparent"
-            onClick={() => window.open(getShareLink(), '_blank')}
-          >
-            View Source in Google Trends
-          </Button>
-        </div>
-      )}
-      {isLoading ? (
-        <div className="flex items-center justify-center py-10">
-          <Loader2 className="h-6 w-6 sm:h-8 sm:w-8 animate-spin text-primary" />
-          <p className="ml-2 text-sm sm:text-base text-primary">
-            Loading trends...
-          </p>
-        </div>
-      ) : error ? (
-        <p className="text-red-500 text-xs sm:text-sm mt-2">{error}</p>
-      ) : (
-        <>
-          {trends.length > 0 ? (
-            <>
-              {summary && (
-                <div className="mt-5 sm:mt-6">
-                  <div className="bg-card rounded-xl p-4 sm:p-5 border-l-4 border-secondary">
-                    <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-accent mb-2">
-                      Field Notes
-                    </p>
-                    <p className="text-xs sm:text-sm text-foreground whitespace-pre-wrap">
-                      {summary}
-                    </p>
-                  </div>
-                </div>
-              )}
-              <div className="mt-8 sm:mt-10">
-                <h3 className="font-display text-xl sm:text-2xl mb-4 sm:mb-5 text-primary">
-                  Trending Topics in {locationName}
-                </h3>
-                <div className="space-y-4 sm:space-y-5">
-                  {trends.map((trend, index) => (
-                    <div
-                      key={index}
-                      className="bg-card border border-border p-4 sm:p-5 rounded-xl"
-                    >
-                      <div className="flex items-center gap-2.5 mb-1">
-                        <span className="flex h-[22px] w-[22px] shrink-0 items-center justify-center rounded-full bg-secondary text-[11px] font-bold text-primary-foreground">
-                          {index + 1}
-                        </span>
-                        <h4 className="text-base sm:text-lg font-bold text-card-foreground">
-                          {trend.title}
-                        </h4>
-                      </div>
-                      {trend.traffic && (
-                        <p className="text-[11px] font-bold uppercase tracking-wide text-accent ml-[30px] mb-3">
-                          {trend.traffic}
-                        </p>
-                      )}
-                      <div className="grid grid-cols-1 gap-3 sm:gap-4 px-2 sm:px-4">
-                        {trend.newsItems &&
-                          trend.newsItems.map((newsItem, newsIndex) => (
-                            <a
-                              key={newsIndex}
-                              href={newsItem.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="flex flex-col sm:flex-row items-start space-y-2 sm:space-y-0 sm:space-x-3 hover:bg-muted p-2 rounded-lg transition duration-150 ease-in-out"
-                            >
-                              {newsItem.picture ? (
-                                <img
-                                  src={newsItem.picture}
-                                  alt={newsItem.title}
-                                  className="w-full sm:w-16 h-32 sm:h-16 object-cover rounded-lg"
-                                  onError={(e) => {
-                                    e.currentTarget.onerror = null;
-                                    e.currentTarget.src =
-                                      '/placeholder.svg?height=80&width=80';
-                                  }}
-                                />
-                              ) : (
-                                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center rounded-lg">
-                                  <ImageOff className="w-6 h-6 sm:w-8 sm:h-8 text-primary-foreground" />
-                                </div>
-                              )}
-                              <div className="flex-1 min-w-0">
-                                <h5 className="font-semibold text-xs sm:text-sm text-card-foreground">
-                                  {newsItem.title}
-                                </h5>
-                                {newsItem.snippet && (
-                                  <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
-                                    {newsItem.snippet}
-                                  </p>
-                                )}
-                                <p className="text-[11px] font-bold uppercase tracking-wide text-accent mt-1">
-                                  {newsItem.source}
-                                </p>
-                              </div>
-                            </a>
-                          ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </>
-          ) : (
-            <p className="text-muted-foreground mt-4 text-sm">
-              No trending topics available at the moment.
+    <div className="flex flex-col gap-12">
+      <DownloadPdfButton
+        location={location}
+        disabled={isLoading || hasError || trends.length === 0}
+      />
+      <div className="flex flex-wrap items-center gap-10">
+        <section
+          ref={forecastRef}
+          aria-live="polite"
+          className="flex min-w-0 flex-[999_1_520px] scroll-mt-6 flex-col gap-4"
+        >
+          <h1 className="font-display text-5xl font-extrabold leading-[0.95] tracking-[-0.02em] text-balance sm:text-7xl lg:text-8xl">
+            {locationName}
+          </h1>
+
+          {isLoading && (
+            <p role="status" className="mt-2 text-lg text-muted-foreground sm:text-xl">
+              Scanning {locationName}&hellip;
             </p>
           )}
-        </>
-      )}
-      <div className="flex items-center py-10 border-t border-border mt-10">
-        <p className="text-[11px] sm:text-xs text-muted-foreground mx-auto text-center">
-          Not for resale or integration; research use only please. This project
-          is not affiliated with or endorsed by Google.
-        </p>
+
+          {hasError && (
+            <div className="mt-2 flex flex-col items-start gap-3">
+              <p role="alert" className="text-lg sm:text-xl">
+                We lost the signal from Google Trends. Try again in a minute.
+              </p>
+              <button
+                type="button"
+                onClick={fetchTrends}
+                className="min-h-[44px] rounded-full border border-input px-4 text-sm font-medium transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              >
+                Try again
+              </button>
+            </div>
+          )}
+
+          {showResults && trends.length === 0 && (
+            <p className="mt-2 text-lg sm:text-xl">
+              Clear skies. Nothing is trending in {locationName} right now.
+            </p>
+          )}
+
+          {showResults && summary && (
+            <>
+              <h2
+                className={`${eyebrow} mt-2 font-medium uppercase text-muted-foreground`}
+              >
+                The outlook &middot; written by Claude
+              </h2>
+              <p className="max-w-[56ch] whitespace-pre-line text-lg leading-[1.55] sm:text-xl">
+                {summary}
+              </p>
+            </>
+          )}
+
+          <a
+            href={sourceLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="self-start py-2.5 text-[15px] font-semibold text-link underline underline-offset-4 hover:text-foreground"
+          >
+            See the raw feed on Google Trends
+          </a>
+        </section>
+
+        <section className="relative flex min-w-0 flex-[1_1_480px] flex-col gap-4 rounded-[20px] border border-border bg-card p-4 sm:p-6">
+          {/* Radar rings, centered on the bottom of the panel */}
+          <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden rounded-[20px]">
+            {[900, 600, 300].map((size) => (
+              <div
+                key={size}
+                className="absolute left-[36%] top-[96%] rounded-full border border-ring-line"
+                style={{
+                  width: size,
+                  height: size,
+                  marginLeft: -size / 2,
+                  marginTop: -size / 2,
+                }}
+              />
+            ))}
+          </div>
+
+          <div className="relative flex flex-col gap-1.5">
+            <label htmlFor="state-picker" className="text-sm font-semibold">
+              Pick a state for the local forecast
+            </label>
+            <select
+              id="state-picker"
+              value={location}
+              disabled={isLocked}
+              onChange={(e) => handleSelect(e.target.value)}
+              className="min-h-[48px] rounded-[10px] border border-input bg-background px-3 text-base font-medium text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-wait disabled:opacity-60"
+            >
+              <option value="US">United States</option>
+              {STATES_BY_NAME.map((s) => (
+                <option key={s.code} value={s.code}>
+                  {s.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <StateTileMap
+            selected={selectedState}
+            disabled={isLocked}
+            onSelect={handleSelect}
+          />
+        </section>
       </div>
+
+      {showResults && trends.length > 0 && (
+        <section className="flex flex-col gap-2">
+          <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 pb-3">
+            <h2 className="font-display text-2xl font-extrabold sm:text-[28px]">
+              Signals over {location === 'US' ? 'the United States' : locationName},{' '}
+              strongest first
+            </h2>
+            <p className="text-sm text-muted-foreground">
+              Color marks rank in the feed. Search counts are Google&rsquo;s
+              estimates.
+            </p>
+          </div>
+
+          {trends.map((trend, index) => {
+            const news = (trend.newsItems || []).filter((n) => n.title);
+            return (
+              <article
+                key={index}
+                className="flex flex-wrap items-start gap-x-6 gap-y-4 border-t border-border py-5"
+              >
+                <span
+                  className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-full font-display text-xl font-extrabold text-[#0e1430] ${
+                    SIGNAL_CLASSES[Math.min(index, SIGNAL_CLASSES.length - 1)]
+                  }`}
+                >
+                  {index + 1}
+                </span>
+                <div className="flex min-w-0 flex-[1_1_300px] flex-col gap-0.5">
+                  <h3 className="font-display text-xl font-bold leading-tight sm:text-2xl">
+                    {trend.title}
+                  </h3>
+                  {trend.traffic && (
+                    <p className="font-mono text-[13px] text-muted-foreground">
+                      {trend.traffic} searches
+                    </p>
+                  )}
+                </div>
+                <div className="flex min-w-0 flex-[2_1_420px] flex-col">
+                  {news.map((newsItem, newsIndex) => (
+                    <a
+                      key={newsIndex}
+                      href={newsItem.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group flex flex-wrap items-baseline gap-x-3 gap-y-0.5 py-2"
+                    >
+                      <span className="underline decoration-tile underline-offset-[3px] group-hover:decoration-foreground">
+                        {newsItem.title}
+                      </span>
+                      <span className="font-mono text-[13px] text-muted-foreground">
+                        {newsItem.source}
+                      </span>
+                    </a>
+                  ))}
+                </div>
+              </article>
+            );
+          })}
+        </section>
+      )}
+
+      <p className="border-t border-border pt-4 text-sm text-muted-foreground">
+        Not affiliated with Google. Data comes from the public Google Trends
+        feed.
+      </p>
     </div>
   );
 }

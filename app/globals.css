@@ -4,80 +4,83 @@
 
 @layer base {
   :root {
-    /* WPA National Parks palette — cream paper, forest green, rust, mustard */
-    --background: 41.8 57.9% 88.8%;
-    --foreground: 32 29.4% 10%;
+    /* Doppler, day mode: the forecast desk with the studio lights up */
+    --background: 230 100% 97.6%;
+    --foreground: 229.4 54.8% 12.2%;
 
-    --card: 42.5 75% 93.7%;
-    --card-foreground: 32 29.4% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 229.4 54.8% 12.2%;
 
-    --popover: 42.5 75% 93.7%;
-    --popover-foreground: 32 29.4% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 229.4 54.8% 12.2%;
 
-    --primary: 158.2 41.5% 20.8%;
-    --primary-foreground: 42.5 75% 93.7%;
+    /* Magenta: rank 1 and the selected state. A fill, never a text color. */
+    --primary: 332 100% 68%;
+    --primary-foreground: 229.4 54.8% 12.2%;
 
-    --secondary: 39.1 66.7% 55.3%;
-    --secondary-foreground: 32 29.4% 10%;
+    --secondary: 38.7 100% 56.3%;
+    --secondary-foreground: 229.4 54.8% 12.2%;
 
-    --muted: 43.4 50.5% 81.8%;
-    --muted-foreground: 41.7 24.3% 29%;
+    --muted: 229.8 54.7% 92%;
+    --muted-foreground: 228.8 28.5% 40.6%;
 
-    --accent: 21.7 75.5% 43.1%;
-    --accent-foreground: 42.5 75% 93.7%;
+    /* Eyebrow text. Dark amber here so it holds 4.5:1 on the light ground. */
+    --accent: 39.1 100% 27.1%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 5.5 58.9% 43.9%;
-    --destructive-foreground: 42.5 75% 93.7%;
+    --destructive: 3 71% 41%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 44 30% 60.8%;
-    --input: 44 30% 60.8%;
-    --ring: 158.2 41.5% 20.8%;
+    --border: 229.8 54.7% 85.3%;
+    --input: 228.8 28.5% 40.6%;
+    --ring: 229.4 54.8% 12.2%;
 
-    --radius: 0.85rem;
+    --radius: 0.75rem;
 
-    /* Map-related CSS variables */
-    --color-map-fill: 43.4 50.5% 81.8%;
-    --color-map-stroke: 158.2 41.5% 20.8%;
-    --color-map-hover: 21.7 75.5% 43.1%;
-    --color-map-pressed: 21.7 75.5% 43.1%;
-    --color-map-selected: 21.7 75.5% 43.1%;
+    /* Radar scale: rank in the feed, strongest first. Always night text on top. */
+    --signal-1: #ff5ca8;
+    --signal-2: #ffb020;
+    --signal-3: #b6f04a;
+    --signal-4: #2bd4c4;
+
+    --link: #0b6b63;
+    --tile-border: #6672b8;
+    --ring-line: #c5ccee;
   }
 
   .dark {
-    --background: 147.3 20.8% 10.4%;
-    --foreground: 43.8 56.9% 87.3%;
+    /* Doppler, night mode: the default */
+    --background: 229.4 54.8% 12.2%;
+    --foreground: 229.4 100% 96.7%;
 
-    --card: 145.7 20% 13.7%;
-    --card-foreground: 43.8 56.9% 87.3%;
+    --card: 231.4 53.8% 20.4%;
+    --card-foreground: 229.4 100% 96.7%;
 
-    --popover: 145.7 20% 13.7%;
-    --popover-foreground: 43.8 56.9% 87.3%;
+    --popover: 231.4 53.8% 20.4%;
+    --popover-foreground: 229.4 100% 96.7%;
 
-    --primary: 150.6 26.1% 60.2%;
-    --primary-foreground: 147.3 20.8% 10.4%;
+    --primary: 332 100% 68%;
+    --primary-foreground: 229.4 54.8% 12.2%;
 
-    --secondary: 40.6 72.6% 65.7%;
-    --secondary-foreground: 147.3 20.8% 10.4%;
+    --secondary: 38.7 100% 56.3%;
+    --secondary-foreground: 229.4 54.8% 12.2%;
 
-    --muted: 138.5 16.9% 15.1%;
-    --muted-foreground: 44.1 31.2% 69.2%;
+    --muted: 231.4 53.8% 20.4%;
+    --muted-foreground: 229.2 41.7% 76.5%;
 
-    --accent: 22.3 73.9% 56.5%;
-    --accent-foreground: 147.3 20.8% 10.4%;
+    --accent: 38.7 100% 56.3%;
+    --accent-foreground: 229.4 54.8% 12.2%;
 
-    --destructive: 1.7 64.5% 58%;
-    --destructive-foreground: 147.3 20.8% 10.4%;
+    --destructive: 4 100% 75%;
+    --destructive-foreground: 229.4 54.8% 12.2%;
 
-    --border: 135.8 13.7% 27.3%;
-    --input: 135.8 13.7% 27.3%;
-    --ring: 150.6 26.1% 60.2%;
+    --border: 230.6 45.5% 30.2%;
+    --input: 229.2 41.7% 76.5%;
+    --ring: 229.4 100% 96.7%;
 
-    /* Dark mode map-related CSS variables */
-    --color-map-fill: 145.7 20% 13.7%;
-    --color-map-stroke: 150.6 26.1% 60.2%;
-    --color-map-hover: 22.3 73.9% 56.5%;
-    --color-map-pressed: 22.3 73.9% 56.5%;
-    --color-map-selected: 22.3 73.9% 56.5%;
+    --link: #7fe7dc;
+    --tile-border: #5564b0;
+    --ring-line: #2e3c82;
   }
 }
 
@@ -93,5 +96,9 @@
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+  /* Archivo is always set wide, like a broadcast lower third */
+  .font-display {
+    font-stretch: 125%;
   }
 }

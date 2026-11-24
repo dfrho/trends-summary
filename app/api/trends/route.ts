@@ -1,26 +1,7 @@
-
-// @ts-ignore
 import { NextResponse } from 'next/server';
-import { XMLParser } from 'fast-xml-parser';
 import Anthropic from '@anthropic-ai/sdk';
 import anthropic from '@/lib/anthropic';
-import { decodeHTMLEntities } from '@/lib/utils';
-
-interface NewsItem {
-  title: string;
-  snippet: string;
-  url: string;
-  picture: string;
-  source: string;
-}
-
-interface TrendItem {
-  title: string;
-  traffic: string;
-  picture: string;
-  pictureSource: string;
-  newsItems: NewsItem[];
-}
+import { fetchTrends } from '@/lib/trends';
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -33,55 +14,14 @@ export async function GET(request: Request) {
 
   try {
     console.log(`Fetching trends for location: ${location}`);
-    const response = await fetch(`https://trends.google.com/trending/rss?geo=${location}`);
-    
-    if (!response.ok) {
-      throw new Error(`Failed to fetch trends: ${response.status} ${response.statusText}`);
-    }
-
-    const xml = await response.text();
-    console.log('Successfully fetched XML data');
-
-    const parser = new XMLParser({
-      ignoreAttributes: false,
-      attributeNamePrefix: "@_",
-      textNodeName: "#text"
-    });
-    const result = parser.parse(xml);
-    console.log('Successfully parsed XML data');
-
-    const trends: TrendItem[] = result.rss.channel.item.map((item: any) => {
-      console.log('Processing item:', JSON.stringify(item, null, 2));
-      return {
-        title: decodeHTMLEntities(item.title),
-        traffic: item['ht:traffic'] || 'Unknown',
-        picture: item['ht:picture'] || '',
-        pictureSource: item['ht:picture_source'] || '',
-        newsItems: Array.isArray(item['ht:news_item']) 
-          ? item['ht:news_item'].map((newsItem: any) => {
-              console.log('Processing news item:', JSON.stringify(newsItem, null, 2));
-              return {
-                title: decodeHTMLEntities(newsItem['ht:news_item_title'] || ''),
-                snippet: decodeHTMLEntities(newsItem['ht:news_item_snippet'] || ''),
-                url: newsItem['ht:news_item_url'] || '',
-                picture: newsItem['ht:news_item_picture'] || '',
-                source: decodeHTMLEntities(newsItem['ht:news_item_source'] || ''),
-              };
-            })
-          : [{
-              title: decodeHTMLEntities(item['ht:news_item']?.['ht:news_item_title'] || ''),
-              snippet: decodeHTMLEntities(item['ht:news_item']?.['ht:news_item_snippet'] || ''),
-              url: item['ht:news_item']?.['ht:news_item_url'] || '',
-              picture: item['ht:news_item']?.['ht:news_item_picture'] || '',
-              source: decodeHTMLEntities(item['ht:news_item']?.['ht:news_item_source'] || ''),
-            }]
-      };
-    });
-
+    const trends = await fetchTrends(location);
     console.log(`Extracted ${trends.length} trends`);
-    console.log('First trend:', JSON.stringify(trends[0], null, 2));
 
-    const prompt = `Based on the following trending topics in ${locationName}, provide a brief analysis of what these trends suggest about current interests and concerns in the area. Use maximum burstiness and perplexity: ${trends.map(t => t.title).join(', ')}`;
+    const prompt = `You are the search forecaster for ${locationName}. Below are its trending Google searches right now, strongest first.
+
+Write the outlook: plain text only, no markdown, no headings, no preamble. Three sentences, under 70 words, present tense. Describe the top search as the system leading the feed, then what sits behind it, then what is holding steady. Use order only and never state or imply numbers. Report what people are searching; do not guess at how they feel. If a topic is a real emergency, drop the weather language and say it plainly.
+
+Searches: ${trends.map(t => t.title).join(', ')}`;
 
     console.log('Sending request to Claude');
     const aiResponse = await anthropic.messages.create({
