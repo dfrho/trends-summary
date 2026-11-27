@@ -41,7 +41,7 @@ export function DownloadPdfButton({ location, disabled }: DownloadPdfButtonProps
       const filename =
         response.headers
           .get('Content-Disposition')
-          ?.match(/filename="([^"]+)"/)?.[1] ?? 'search-forecast.pdf';
+          ?.match(/filename="([^"]+)"/)?.[1] ?? 'news-topics.pdf';
       const url = URL.createObjectURL(await response.blob());
       const link = document.createElement('a');
       link.href = url;

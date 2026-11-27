@@ -148,6 +148,18 @@ export default function TrendsSummary() {
           aria-live="polite"
           className="flex min-w-0 flex-[999_1_520px] scroll-mt-6 flex-col gap-4"
         >
+          <div className="flex max-w-[56ch] flex-col gap-1.5">
+            <p className="text-lg font-semibold sm:text-xl">
+              See what your customer&rsquo;s state is searching for before you
+              call.
+            </p>
+            <p className="text-muted-foreground">
+              Pick their state. Claude reads Google&rsquo;s live trending
+              searches and the headlines behind them, then writes three
+              sentences on the topics you can open with.
+            </p>
+          </div>
+
           <h1 className="font-display text-5xl font-extrabold leading-[0.95] tracking-[-0.02em] text-balance sm:text-7xl lg:text-8xl">
             {locationName}
           </h1>
@@ -194,7 +206,7 @@ export default function TrendsSummary() {
               <h2
                 className={`${eyebrow} mt-2 font-medium uppercase text-muted-foreground`}
               >
-                The outlook &middot; written by Claude
+                Today&rsquo;s topics &middot; written by Claude
               </h2>
               <p className="max-w-[56ch] whitespace-pre-line text-lg leading-[1.55] sm:text-xl">
                 {summary}
@@ -231,7 +243,7 @@ export default function TrendsSummary() {
 
           <div className="relative flex flex-col gap-1.5">
             <label htmlFor="state-picker" className="text-sm font-semibold">
-              Pick a state for the local forecast
+              Pick your customer&rsquo;s state
             </label>
             <select
               id="state-picker"
@@ -342,6 +354,58 @@ export default function TrendsSummary() {
           })}
         </section>
       )}
+
+      <section className="flex flex-wrap gap-x-10 gap-y-8 border-t border-border pt-10">
+        <div className="flex min-w-0 flex-[1_1_380px] flex-col gap-3">
+          <h2 className="font-display text-2xl font-extrabold sm:text-[28px]">
+            Why this exists
+          </h2>
+          <p className="max-w-[56ch] leading-[1.6]">
+            Before a call with a customer in another state, it helps to know
+            what people there are looking up today. Google publishes that for
+            every state, but as a bare list with no explanation. This page
+            reads the list and the news attached to each search, and tells you
+            what leads, what follows, and what is holding steady.
+          </p>
+          <p className="max-w-[56ch] leading-[1.6]">
+            Free and open source. The code is on{' '}
+            <a
+              href="https://github.com/dfrho/trends-summary"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-link underline underline-offset-4 hover:text-foreground"
+            >
+              GitHub
+            </a>
+            .
+          </p>
+        </div>
+
+        <div className="flex min-w-0 flex-[1_1_380px] flex-col gap-3">
+          <h2 className="font-display text-2xl font-extrabold sm:text-[28px]">
+            How to use it before a call
+          </h2>
+          <ol className="flex max-w-[56ch] list-decimal flex-col gap-2 pl-5 leading-[1.6] marker:font-mono marker:text-muted-foreground">
+            <li>Pick your customer&rsquo;s state.</li>
+            <li>
+              Read the three sentences at the top. It takes about ten seconds.
+            </li>
+            <li>
+              Open the news link beside any search for the detail, so you know
+              the story before you mention it.
+            </li>
+          </ol>
+          <p className="max-w-[56ch] leading-[1.6]">
+            Taking it into a meeting?{' '}
+            <span className="font-semibold">Download PDF</span> puts the same
+            news topics on one page.
+          </p>
+          <p className="max-w-[56ch] leading-[1.6] text-muted-foreground">
+            Trending searches include bad news. Read the headline before you
+            bring a topic up.
+          </p>
+        </div>
+      </section>
 
       <p className="border-t border-border pt-4 text-sm text-muted-foreground">
         Not affiliated with Google. Data comes from the public Google Trends

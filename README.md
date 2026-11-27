@@ -2,14 +2,14 @@
 
 ![Search by State Trends screenshot](public/search_trends_screenshot.png)
 
-A search forecast for every US state: pick a state and see what's trending on Google there, summarized by Claude.
+News topics for every US state, built for sales reps who want a local opener: pick your customer's state and see what's trending on Google there, summarized by Claude.
 
 ## What it does
 
 1. Pick a state on the tile map or from the dropdown.
 2. The app fetches that state's real-time Google Trends feed.
-3. Claude (Anthropic API) reads the trends and writes a three-sentence outlook.
-4. The outlook sits beside the map, with the ranked trends and their news sources below.
+3. Claude (Anthropic API) reads the trends and writes three sentences on the topics you can open with.
+4. Claude's summary sits beside the map, with the ranked trends and their news sources below.
 
 No database, no auth, no persistent storage — just a live lookup against Google Trends and a Claude call for the summary.
 
@@ -58,9 +58,8 @@ npm run test:watch
 
 ## Use cases
 
-- Quick conversation starters when meeting people from other states
-- A pulse check on regional news, weather, or events
-- Region-specific insights for content or marketing
+- A local opener before a sales call with a customer in another state
+- A one-page PDF of a state's news topics to take into a meeting
 
 ## Contributing
 

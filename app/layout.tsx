@@ -23,16 +23,17 @@ const archivo = Archivo({
 });
 
 export const metadata: Metadata = {
-  title: 'Search Trends by State',
-  description: 'Explore real-time search trends for different states in the US',
+  title: 'Search Trends by State: local conversation topics for sales calls',
+  description:
+    'See what each US state is searching for on Google right now, summarized by Claude in three sentences. For sales reps who want a local opener before a call.',
   openGraph: {
     type: 'website',
     locale: 'en_US',
     url: 'https://state-search-trends-summary.vercel.app',
     siteName: 'Search Trends by State ',
-    title: 'Search Trends by State',
+    title: 'Search Trends by State: local conversation topics for sales calls',
     description:
-      'Explore real-time search trends for different states in the US',
+      'See what each US state is searching for on Google right now, summarized by Claude in three sentences. For sales reps who want a local opener before a call.',
     images: [
       {
         url: 'https://state-search-trends-summary.vercel.app/og-image.png',
@@ -44,8 +45,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Search Trends by State',
-    description: 'Explore real-time search trends by state in the US',
+    title: 'Search Trends by State: local conversation topics for sales calls',
+    description:
+      'See what each US state is searching for on Google right now, summarized by Claude in three sentences. For sales reps who want a local opener before a call.',
     images: ['https://state-search-trends-summary.vercel.app/og-image.png'],
     creator: '@brhodesdav',
   },
