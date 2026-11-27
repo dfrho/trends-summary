@@ -123,7 +123,7 @@ export async function GET(request: Request) {
     });
 
     const slug = placeName.toLowerCase().replace(/\s+/g, '-');
-    const filename = `${slug}-search-forecast-${now.toISOString().slice(0, 10)}.pdf`;
+    const filename = `${slug}-news-topics-${now.toISOString().slice(0, 10)}.pdf`;
 
     return new Response(Buffer.from(pdf), {
       headers: {

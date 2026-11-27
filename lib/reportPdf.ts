@@ -137,7 +137,7 @@ export async function renderReportPdf(data: ReportData): Promise<Uint8Array> {
   const bytes = await loadFontBytes();
   const doc = await PDFDocument.create();
   doc.registerFontkit(fontkit);
-  doc.setTitle(`${data.placeName} search forecast, ${data.dateLabel}`);
+  doc.setTitle(`${data.placeName} news topics, ${data.dateLabel}`);
   doc.setCreator('Search Trends by State');
 
   const f = {} as Record<FontKey, PDFFont>;
@@ -189,7 +189,7 @@ export async function renderReportPdf(data: ReportData): Promise<Uint8Array> {
 
   // Outlook
   y -= 24;
-  label('THE OUTLOOK · WRITTEN BY CLAUDE', y);
+  label("TODAY'S TOPICS · WRITTEN BY CLAUDE", y);
   y -= 3;
   for (const line of wrap(f.body, clean(f.body, data.outlook), 11.25, CONTENT_W, 6)) {
     y -= 17.5;
